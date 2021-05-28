@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_58sdp"
+    android:paddingHorizontal="@dimen/_10sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/light_blue_bg"
+        />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="Rhys Hawkins"
+        android:textColor="#101010"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintStart_toEndOf="@id/text"
+        app:layout_constraintTop_toTopOf="@+id/text"
+        android:layout_marginStart="@dimen/_10sdp"/>
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:fontFamily="@font/open_sans_regular"
+        android:text="rhys.haw4@golddex.com"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/text"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#EBF0F3"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

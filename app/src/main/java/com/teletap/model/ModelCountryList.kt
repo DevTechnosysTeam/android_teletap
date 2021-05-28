@@ -1,0 +1,21 @@
+package com.teletap.model
+
+class ModelCountryList {
+
+    val status = 0
+    val dataflow = 0
+    val message: String? = null
+    var data: List<DataBean>? = null
+
+    class DataBean {
+        /**
+         * school_id : 1
+         * name : 1-school
+         */
+        var id = 0
+        var phonecode = 0
+        var name: String? = null
+        var sortname: String? = null
+
+    }
+}

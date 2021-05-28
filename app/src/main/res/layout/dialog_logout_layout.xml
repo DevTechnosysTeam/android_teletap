@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/grey_border_round_corner_bg"
+            android:orientation="vertical"
+            android:padding="20dp">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Are you sure you want to logout"
+                android:textColor="@color/text_colour"
+                android:textSize="14sp"
+                android:fontFamily="@font/open_sans_regular"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_yes"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="40dp"
+                android:background="@drawable/blue_btn_round_corner_bg"
+                android:textSize="14sp"
+                android:text="Yes"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_no"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="40dp"
+                android:background="@drawable/grey_border_round_corner_bg"
+                android:textSize="14sp"
+                android:text="No"
+                android:fontFamily="@font/open_sans_semibold"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/round_app_icon"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="@dimen/_1sdp"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
+        <!--<androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/exit_icon"
+            android:layout_centerHorizontal="true"
+            >
+            &lt;!&ndash;<androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_edit"
+                android:tint="@color/white"
+                android:layout_centerInParent="true"
+                />&ndash;&gt;
+        </androidx.appcompat.widget.AppCompatImageView>-->
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/ivClose"
+            android:text="Select country"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/close_blue_icon"
+            android:layout_alignParentEnd="true"
+            android:onClick="onClick"
+            android:contentDescription="Close" />
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="Search"
+            android:textColor="@color/black"
+            android:singleLine="true"
+            android:layout_below="@+id/txt"
+            android:textColorHint="@color/border_colour"
+            android:autofillHints=""
+            android:inputType="text" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ccRecycler"
+            android:layout_below="@+id/etSearch"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</RelativeLayout>

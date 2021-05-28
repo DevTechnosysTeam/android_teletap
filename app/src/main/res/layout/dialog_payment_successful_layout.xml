@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:padding="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/imgClose"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:src="@drawable/close_blue_icon"
+        android:padding="@dimen/_5sdp"/>
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Payment successful"
+        android:fontFamily="@font/open_sans_bold"
+        android:textColor="#1B262C"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/_15sdp"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/open_sans_regular"
+        android:textColor="#1B262C"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@id/text1"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/text2"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:background="#EFEFEF"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="Share invoice"
+        android:textColor="#3282B8"
+        android:fontFamily="@font/open_sans_bold"
+        android:textSize="14sp"
+        android:layout_marginBottom="@dimen/_15sdp"/>
+
+</RelativeLayout>

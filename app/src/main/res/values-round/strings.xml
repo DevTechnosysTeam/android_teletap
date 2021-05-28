@@ -1,0 +1,7 @@
+<resources>
+    <string name="hello_world">Hello Round World!</string>
+    <string name="earnings">Earnings</string>
+    <string name="payment">Payment</string>
+    <string name="payout">Payout</string>
+    <string name="profile">Profile</string>
+</resources>

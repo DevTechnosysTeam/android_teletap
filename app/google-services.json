@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578951422985",
+    "project_id": "teletap-f70bc",
+    "storage_bucket": "teletap-f70bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578951422985:android:c4325902c5bcb3911d84d8",
+        "android_client_info": {
+          "package_name": "com.teletap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578951422985-tpbcpgbdqeq0b07hojd0ffuenqtj1oqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUB8xX16JYNkrDGmFKCvlxzrn-HtEGBKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578951422985-tpbcpgbdqeq0b07hojd0ffuenqtj1oqb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

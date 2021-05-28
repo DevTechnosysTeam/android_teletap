@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_20sdp">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/update_customer"
+        android:fontFamily="@font/open_sans_bold"
+        android:textColor="#222222"
+        android:textSize="22sp"/>
+
+
+    <ImageView
+        android:id="@+id/imgClose"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/close_blue_icon"
+        app:layout_constraintTop_toTopOf="@id/text"
+        app:layout_constraintBottom_toBottomOf="@id/text"
+        android:contentDescription="@string/close" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEdit"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_35sdp"
+        app:layout_constraintTop_toBottomOf="@id/text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/light_blue_round_corner_bg"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/edit"
+        android:textColor="#0F4C75"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textSize="14sp"/>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDelete"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_35sdp"
+        app:layout_constraintTop_toBottomOf="@id/btnEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/light_blue_round_corner_bg"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/delete"
+        android:textColor="#0F4C75"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textSize="14sp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

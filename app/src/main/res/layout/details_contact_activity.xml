@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.DetailsContact"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/white_back_icon"
+                android:layout_centerVertical="true"
+                android:onClick="onclick"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:padding="@dimen/_3sdp"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:fontFamily="@font/open_sans_bold"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:id="@+id/imgMoreOptions"
+                android:layout_width="@dimen/_28sdp"
+                android:layout_height="@dimen/_28sdp"
+                android:src="@drawable/more_options_icon"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:onClick="onclick"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:padding="@dimen/_2sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/contactName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolBar"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text=""
+            android:textSize="20sp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="#000000"
+            />
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/contactName"
+            app:layout_constraintStart_toStartOf="@id/contactName"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_8sdp">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/phone_icon"
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/tvMobileNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="#979797"
+                android:textSize="14sp"
+                android:layout_marginStart="@dimen/_5sdp"/>
+
+            <ImageView
+                android:id="@+id/img2"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/mail_icon"
+                android:layout_marginStart="@dimen/_10sdp"
+                />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/open_sans_regular"
+                android:textColor="#979797"
+                android:textSize="14sp"
+                android:layout_marginStart="@dimen/_5sdp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/linear"
+            app:layout_constraintStart_toStartOf="@id/linear"
+            android:text="@string/transition_history"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="16sp"
+            android:textColor="#000000"/>
+
+        <Button
+            android:id="@+id/btnCreateBill"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_15sdp"
+            android:background="@drawable/blue_btn_round_corner_bg"
+            android:text="@string/create_bill"
+            android:onClick="onclick"
+            android:textColor="@color/white"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="16sp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/history"
+            app:layout_constraintBottom_toTopOf="@id/btnCreateBill"
+            app:layout_constraintStart_toStartOf="@id/history"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_transition_history_layout"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_5sdp"/>
+
+        <TextView
+            android:id="@+id/noHistoryFound"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/history"
+            app:layout_constraintBottom_toTopOf="@id/btnCreateBill"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/no_history_found"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

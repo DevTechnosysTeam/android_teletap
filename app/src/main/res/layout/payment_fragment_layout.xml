@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+        <EditText
+            android:id="@+id/edAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:focusableInTouchMode="false"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="25sp"
+            android:inputType="number"
+            android:gravity="center_horizontal"
+            android:textColor="@color/text_colour"
+            android:textColorHint="#A9A9AA"
+            android:hint="@string/enter_amount_aed"
+            android:background="@android:color/transparent"/>
+
+        <EditText
+            android:id="@+id/edDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edAmount"
+            android:background="@drawable/grey_border_round_corner_bg"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:maxLines="6"
+            android:fontFamily="@font/open_sans_regular"
+            android:textSize="14sp"
+            android:padding="@dimen/_8sdp"
+            android:hint="@string/description"
+            android:gravity="start"
+            android:layout_marginTop="@dimen/_20sdp"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layout_constraintTop_toBottomOf="@id/edDescription">
+
+            <ImageView
+                android:id="@+id/imgNumericKeyboard"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/active_numeric_keyborad"
+                android:padding="@dimen/_3sdp"
+                />
+
+            <ImageView
+                android:id="@+id/imgKeyboard"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/msg_keyboard"
+                android:layout_toEndOf="@id/imgNumericKeyboard"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:padding="@dimen/_3sdp"
+                />
+
+        </RelativeLayout>
+
+
+        <com.konaire.numerickeyboard.NumericKeyboard
+            android:id="@+id/keyboardCustom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:field="@+id/edAmount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintBottom_toTopOf="@id/btnCharge"
+            app:keyTextColor="#000000"
+            app:keyHeight="@dimen/_40sdp"
+            app:keySpecial = "."
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCharge"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_35sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_15sdp"
+            android:background="@drawable/grey_btn_round_corner_bg"
+            android:text="@string/charge"
+            android:textColor="#401B262C"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="14sp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

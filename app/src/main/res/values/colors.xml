@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0F4C75</color>
+    <color name="colorPrimaryDark">#0E466C</color>
+    <color name="colorAccent">#0F4C75</color>
+
+    <color name="splash_background">#1B262C</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000</color>
+    <color name="border_colour">#B7BEC5</color>
+    <color name="switch_colour">#DBDFE4</color>
+    <color name="text_colour">#262626</color>
+
+    <color name="green">#3CB371</color>
+    <color name="green_">#89ba16</color>
+
+    <color name="red_A400">#ff2d6f</color>
+
+    <color name="background_">#dddddd</color>
+
+    <!--    100% — FF-->
+    <!--    95% — F2-->
+    <!--    90% — E6-->
+    <!--    85% — D9-->
+    <!--    80% — CC-->
+    <!--    75% — BF-->
+    <!--    70% — B3-->
+    <!--    65% — A6-->
+    <!--    60% — 99-->
+    <!--    55% — 8C-->
+    <!--    50% — 80-->
+    <!--    45% — 73-->
+    <!--    40% — 66-->
+    <!--    35% — 59-->
+    <!--    30% — 4D-->
+    <!--    25% — 40-->
+    <!--    20% — 33-->
+    <!--    15% — 26-->
+    <!--    10% — 1A-->
+    <!--    5% — 0D-->
+    <!--    0% — 00-->
+
+
+</resources>

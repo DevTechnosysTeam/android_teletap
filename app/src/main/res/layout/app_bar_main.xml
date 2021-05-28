@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.HomeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/toolbar_img"
+            app:navigationIcon="@drawable/ic_nav_icon"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <TextView
+                android:id="@+id/headingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/open_sans_bold"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchCurrency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                app:track="@drawable/track"
+                android:layout_marginEnd="@dimen/_10sdp"
+                style="@style/MySwitch"
+                 />
+
+            <TextView
+                android:id="@+id/aed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AED"
+                android:textColor="@color/white"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_gravity="end"
+                android:textSize="14sp"
+                android:layout_marginEnd="@dimen/_3sdp"
+
+                />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_main" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

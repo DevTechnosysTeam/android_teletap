@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/earnings"
+        android:icon="@drawable/earings"
+        android:title="@string/earnings" />
+    <item
+        android:id="@+id/payment"
+        android:icon="@drawable/payment"
+        android:title="@string/payment" />
+
+    <item
+        android:id="@+id/payout"
+        android:icon="@drawable/payout"
+        android:title="@string/payout" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/profile_nav"
+        android:title="@string/profile" />
+
+</menu>

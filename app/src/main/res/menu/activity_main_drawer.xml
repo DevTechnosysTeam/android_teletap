@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group >
+        <!--<item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_slideshow" />-->
+        <item
+            android:id="@+id/businessProfile"
+            android:title="@string/business_profile"/>
+
+        <item
+            android:id="@+id/contacts"
+            android:title="@string/contacts"/>
+
+        <item
+            android:id="@+id/bankAccount"
+            android:title="@string/bank_account"/>
+
+        <item
+            android:id="@+id/aboutUs"
+            android:title="@string/about_us"/>
+
+        <item
+            android:id="@+id/termsOfUse"
+            android:title="@string/terms_of_use"/>
+
+        <item
+            android:id="@+id/privacy"
+            android:title="@string/privacy"/>
+
+        <item
+            android:id="@+id/contactUs"
+            android:title="@string/contact_us"/>
+
+        <item
+            android:id="@+id/faq"
+            android:title="@string/faq"/>
+
+        <item
+            android:id="@+id/logOut"
+            android:title="@string/logout"/>
+
+    </group>
+</menu>

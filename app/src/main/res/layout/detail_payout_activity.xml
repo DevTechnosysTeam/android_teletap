@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DetailPayout"
+    android:background="@color/white">
+
+        <include
+            android:id="@+id/toolBar"
+            layout="@layout/toolbar_blue_layout"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/toolBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardBackgroundColor="@color/white"
+            android:elevation="@dimen/_5sdp"
+            android:layout_margin="@dimen/_10sdp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cardViewLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_15sdp">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/cardViewLayout"
+                    app:layout_constraintTop_toTopOf="@id/cardViewLayout"
+                    android:text="Nice Herbal Beauty Shop"
+                    android:textColor="#3282B8"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/name"
+                    app:layout_constraintTop_toBottomOf="@id/name"
+                    android:text="Tax"
+                    android:textColor="#575B5E"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/open_sans_semibold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tax"
+                    app:layout_constraintBottom_toBottomOf="@id/tax"
+                    app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
+                    android:text="10%"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="14sp"
+                    android:textColor="#575B5E"/>
+
+                <TextView
+                    android:id="@+id/extraCharges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tax"
+                    app:layout_constraintTop_toBottomOf="@id/tax"
+                    android:text="Extra Charges"
+                    android:textColor="#575B5E"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/open_sans_semibold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/extraCharges"
+                    app:layout_constraintBottom_toBottomOf="@id/extraCharges"
+                    app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
+                    android:text="15%"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="14sp"
+                    android:textColor="#575B5E"/>
+
+                <TextView
+                    android:id="@+id/CurrencyExchange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/extraCharges"
+                    app:layout_constraintTop_toBottomOf="@id/extraCharges"
+                    android:text="Currency exchange charge"
+                    android:textColor="#575B5E"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/open_sans_semibold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/CurrencyExchange"
+                    app:layout_constraintBottom_toBottomOf="@id/CurrencyExchange"
+                    app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
+                    android:text="12%"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="14sp"
+                    android:textColor="#575B5E"/>
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/CurrencyExchange"
+                    app:layout_constraintTop_toBottomOf="@id/CurrencyExchange"
+                    android:text="Date"
+                    android:textColor="#575B5E"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/open_sans_semibold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/date"
+                    app:layout_constraintBottom_toBottomOf="@id/date"
+                    app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
+                    android:text="09/04/2021"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="14sp"
+                    android:textColor="#575B5E"/>
+
+                <TextView
+                    android:id="@+id/totalCharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/date"
+                    app:layout_constraintTop_toBottomOf="@id/date"
+                    android:text="Total Charge"
+                    android:textColor="#575B5E"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/totalCharge"
+                    app:layout_constraintBottom_toBottomOf="@id/totalCharge"
+                    app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
+                    android:text="237"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textSize="16sp"
+                    android:textColor="#575B5E"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

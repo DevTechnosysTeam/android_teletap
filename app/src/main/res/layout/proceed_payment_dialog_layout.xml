@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/_30sdp">
+
+    <ImageView
+        android:id="@+id/imgClose"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:src="@drawable/close_blue_icon"
+        android:padding="@dimen/_5sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please select the method with which you want to proceed the payment"
+        android:fontFamily="@font/open_sans_regular"
+        android:textColor="#17192D"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:textSize="17sp"/>
+
+    <RelativeLayout
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        >
+        <TextView
+            android:id="@+id/ocrText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OCR"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="17sp"
+            android:textColor="#3282B8"
+            />
+
+        <TextView
+            android:id="@+id/nfcText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NFC"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="17sp"
+            android:textColor="#3282B8"
+            />
+    </RelativeLayout>
+
+</LinearLayout>
+
+</layout>
