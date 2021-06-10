@@ -30,7 +30,6 @@ class SplashActivity : AppCompatActivity() {
             )
         }
 
-
         printKeyHash(this@SplashActivity)
 
         Handler(Looper.getMainLooper()).postDelayed({

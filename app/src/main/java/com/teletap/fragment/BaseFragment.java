@@ -2,9 +2,11 @@ package com.teletap.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +25,8 @@ public class BaseFragment extends Fragment {
 
     private static Toast toast;
 
-    private ProgressDialog pDialog;
+    //private ProgressDialog pDialog;
+    private Dialog pDialog;
 
     public BaseFragment() {
         // Required empty radio_uncheck constructor
@@ -65,8 +68,12 @@ public class BaseFragment extends Fragment {
 //            mProgressDialog.show();
 
         if (pDialog == null) {
-            pDialog = new ProgressDialog(context);
-            pDialog.setMessage(message);
+            //pDialog = new ProgressDialog(context);
+            pDialog = new Dialog(context);
+            //pDialog = new ProgressDialog(context);
+            pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            pDialog.setContentView(R.layout.custom_progress_bar_layout);
+            //pDialog.setMessage(message);
             pDialog.setCancelable(false);
 //            pDialog.setIndeterminate(true);
         }

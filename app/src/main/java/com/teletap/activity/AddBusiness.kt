@@ -1,22 +1,18 @@
 package com.teletap.activity
 
 import android.Manifest
-import android.Manifest.permission
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.location.Geocoder
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.*
 import android.widget.Toast
@@ -34,33 +30,35 @@ import com.teletap.adapter.AdapterCategory
 import com.teletap.adapter.AdapterCountry
 import com.teletap.databinding.AddBusinessActivityBinding
 import com.teletap.databinding.PopupDialogLayoutBinding
-import com.teletap.dialogFragment.UploadImageDialog
+import com.teletap.databinding.PopupListSearchDialogLayoutBinding
 import com.teletap.model.*
 import com.teletap.presenterClasses.AddBusiness_Presenter
-import com.teletap.utilities.FileUtil
+import com.teletap.utilities.RealPathUtil
 import com.teletap.utilities.Utility
-import com.teletap.utilities.Utility.hasPermissions
 import com.teletap.view.IAddBusinessView
 import kotlinx.android.synthetic.main.business_profile_activity.*
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClickListener, View.OnClickListener, AdapterCountry.OnItemClickListener/*, EasyPermissions.PermissionCallbacks*/ {
+class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClickListener,
+    View.OnClickListener, AdapterCountry.OnItemClickListener/*, EasyPermissions.PermissionCallbacks*/ {
 
     lateinit var binding : AddBusinessActivityBinding
 
     private val PERMISSION_CAMERA_EXTERNAL_STORAGE_CODE = 301
-    private val PERMISSIONS_Photo = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val PERMISSION_EXTERNAL_STORAGE_CODE = 501
+    private val PERMISSIONS_Photo = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
     private var uri: Uri? = null
     val MEDIA_TYPE_IMAGE = 1
     val PICK_IMAGE_FROM_GALLERY = 10
@@ -84,18 +82,26 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
     //countryList
     private val countryList:ArrayList<ModelCountryList.DataBean> = ArrayList<ModelCountryList.DataBean>()
     private var countryId : Int = 0
-    lateinit var countryDialogBinding : PopupDialogLayoutBinding
+    lateinit var countryDialogBinding : PopupListSearchDialogLayoutBinding
     lateinit var countryDialog : Dialog
     lateinit var countryAdapter : AdapterCountry
 
     var captureLicenseFile: Uri? = null
     var captureIdProofFile: Uri? = null
 
+    private var uploadFileType : Int = 0
+
+    private var doubleBackToExitPressedOnce = false
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.add_business_activity)
         presenterAddBusiness = AddBusiness_Presenter()
         presenterAddBusiness.view = this
+
+
         try {
             userInfo = AppPreference.getUserInfo(this@AddBusiness)
         }
@@ -106,11 +112,16 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
 
         getBusinessProfileApi()
 
+        binding.edSocialMedia.movementMethod = LinkMovementMethod.getInstance()
+        binding.edWebsite.movementMethod = LinkMovementMethod.getInstance()
+
         binding.addImageAB.setOnClickListener(this)
         binding.btnBrowseLicense.setOnClickListener(this)
         binding.btnBrowseId.setOnClickListener(this)
         binding.btnSaveAB.setOnClickListener(this)
         binding.edCountryAB.setOnClickListener(this)
+        binding.tvCategory.setOnClickListener(this)
+        binding.imgBackAB.setOnClickListener(this)
 
     }
 
@@ -134,13 +145,6 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         }
     }
 
-    fun onBusinessClick(view: View) {
-        when(view.id){
-            R.id.category -> {
-                getCategoryList()
-            }
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -157,7 +161,11 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
                         .load("file:///$imagePath").into(binding.roundedImageView)
                     //changeProfilePic=true
                 } else {
-                    Toast.makeText(this, "something went wrong! please try again", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "something went wrong! please try again",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         } else if (requestCode == PICK_IMAGE_FROM_GALLERY && resultCode == Activity.RESULT_OK && data != null) {
@@ -169,8 +177,10 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
                 } else {
                     uri!!.path!!
                 }
-                Glide.with(this).applyDefaultRequestOptions(RequestOptions()
-                    .placeholder(R.drawable.default_user_profile)).load(imagePath).into(binding.roundedImageView)
+                Glide.with(this).applyDefaultRequestOptions(
+                    RequestOptions()
+                        .placeholder(R.drawable.default_user_profile)
+                ).load(imagePath).into(binding.roundedImageView)
             }
         }
 
@@ -212,7 +222,7 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
                 LayoutInflater.from(
                     this@AddBusiness
                 ),
-                R.layout.popup_dialog_layout, binding!!.root as ViewGroup, false
+                R.layout.popup_dialog_layout, binding.root as ViewGroup, false
             )
             dialogCategory= Dialog(Objects.requireNonNull(this@AddBusiness))
             dialogCategory.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -252,7 +262,7 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
 
     override fun onSelectedCategory(view: View?, index: Int, s: ModelCategory.DataBean) {
         category_id = s.id
-        binding.tvCategory.text = s.name
+        binding.tvCategory.setText(s.name)
         dialogCategory.dismiss()
     }
 
@@ -261,80 +271,35 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
             R.id.addImageAB -> {
                 requestToUploadProfilePhoto()
             }
+            R.id.tvCategory -> {
+                Utility.hideKeyboard(this@AddBusiness)
+                getCategoryList()
+            }
             R.id.btnBrowseLicense -> {
-                val chooser = StorageChooser.Builder()
-                    .withActivity(this@AddBusiness)
-                    .withFragmentManager(fragmentManager)
-                    .withMemoryBar(true)
-                    .allowCustomPath(true)
-                    .setType(StorageChooser.FILE_PICKER)
-                    .build()
-                chooser.setOnSelectListener { path ->
-                    Log.e("LicenseFile", path)
-
-                    if (path.contains("pdf") || path.contains("doc") || path.contains("PDF") || path.contains(
-                            "DOC"
-                        ) || path.contains("xls") || path.contains("txt") || path.contains("png")
-                        || path.contains("jpeg") || path.contains("jpg")
-                    ) {
-                        captureLicenseFile = Uri.parse(path)
-                        Log.e("LicenseFile", path)
-                        binding.tvLicenseName.text = "File Selected"
-
-                    } else {
-                        Toast.makeText(
-                            this@AddBusiness,
-                            "Please select valid file",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-                chooser.show()
+                Utility.hideKeyboard(this@AddBusiness)
+                uploadFileType = 1
+                fileUploadRequest(1)
             }
             R.id.btnBrowseId -> {
-                val chooser2 = StorageChooser.Builder()
-                    .withActivity(this@AddBusiness)
-                    .withFragmentManager(fragmentManager)
-                    .withMemoryBar(true)
-                    .allowCustomPath(true)
-                    .setType(StorageChooser.FILE_PICKER)
-                    .build()
-                chooser2.setOnSelectListener { path ->
-                    Log.e("LicenseFile", path)
-
-                    if (path.contains("pdf") || path.contains("doc") || path.contains("PDF") || path.contains(
-                            "DOC"
-                        ) || path.contains("xls") || path.contains("txt") || path.contains("png")
-                        || path.contains("jpeg") || path.contains("jpg")
-                    ) {
-                        captureIdProofFile = Uri.parse(path)
-                        Log.e("IdFile", path)
-                        //val fileName = Utility.getFileName(this@AddBusiness, captureIdProofFile)
-                        val file2 = FileUtil.from(this, captureIdProofFile)
-                        binding.tvIdProofName.text = "File Selected"
-
-                    } else {
-                        Toast.makeText(
-                            this@AddBusiness,
-                            "Please select valid file",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-                chooser2.show()
+                Utility.hideKeyboard(this@AddBusiness)
+                uploadFileType = 2
+                fileUploadRequest(2)
             }
             R.id.btnSaveAB -> {
                 checkValidations()
             }
-            R.id.edCountryAB ->{
+            R.id.edCountryAB -> {
                 Utility.hideKeyboard(this@AddBusiness)
                 if (Utility.hasConnection(this@AddBusiness)) {
                     val map: MutableMap<String, Any> = HashMap()
                     //map["token"] = ""+ token
                     presenterAddBusiness.getCountryListApi(this@AddBusiness, map)
-                }else {
+                } else {
                     Utility.showToast(this@AddBusiness, getString(R.string.no_network_message))
                 }
+            }
+            R.id.imgBackAB -> {
+                onBackPressed()
             }
         }
     }
@@ -349,11 +314,22 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         }else if (TextUtils.isEmpty(binding.edBusinessNameAB.text.toString().trim())) {
             Toast.makeText(this@AddBusiness, "Please enter Business name", Toast.LENGTH_SHORT).show()
             binding.edBusinessNameAB.requestFocus()
+        }else if (TextUtils.isEmpty(binding.edTaxNumberAB.text.toString().trim())) {
+            Toast.makeText(this@AddBusiness, "Please enter Business Tax Number", Toast.LENGTH_SHORT).show()
+            binding.edTaxNumberAB.requestFocus()
         }else if (TextUtils.isEmpty(binding.edDisplayNameAB.text.toString().trim())) {
-            Toast.makeText(this@AddBusiness, "Please enter your business display name", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@AddBusiness,
+                "Please enter your business display name",
+                Toast.LENGTH_SHORT
+            ).show()
             binding.edDisplayNameAB.requestFocus()
         }else if (captureLicenseFile == null){
-            Toast.makeText(this@AddBusiness, "Please select your shop/business license", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@AddBusiness,
+                "Please select your shop/business license",
+                Toast.LENGTH_SHORT
+            ).show()
         }else if (captureIdProofFile == null){
             Toast.makeText(this@AddBusiness, "Please select your id proof", Toast.LENGTH_SHORT).show()
         }else if (category_id == 0){
@@ -377,20 +353,35 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         builder.addFormDataPart("last_name", binding.edLastNameAB.text.toString().trim())
         builder.addFormDataPart("business_name", binding.edBusinessNameAB.text.toString().trim())
         builder.addFormDataPart("display_name", binding.edDisplayNameAB.text.toString().trim())
+        builder.addFormDataPart("business_tax_id", binding.edTaxNumberAB.text.toString().trim())
         builder.addFormDataPart("about_business", binding.edAboutAB.text.toString().trim())
         builder.addFormDataPart("website", binding.edWebsite.text.toString().trim())
         builder.addFormDataPart("social_media", binding.edSocialMedia.text.toString().trim())
-        builder.addFormDataPart("category_id", ""+category_id)
-        builder.addFormDataPart("country", ""+countryId)
-        builder.addFormDataPart("state", "" )
-        builder.addFormDataPart("city", "" )
+        builder.addFormDataPart("category_id", "" + category_id)
+        builder.addFormDataPart("country", "" + countryId)
+        builder.addFormDataPart("state", "")
+        builder.addFormDataPart("city", "")
         builder.addFormDataPart("zipcode", "")
         val file1: File?
         if (captureLicenseFile != null) {
             try {
-                file1 = FileUtil.from(this, captureLicenseFile)
-                builder.addFormDataPart("license", Utility.getFileName(this, Uri.fromFile(file1)), RequestBody.create(
-                    "multipart/form-data".toMediaTypeOrNull(), file1))
+                /*val path1: String? = RealPathUtil.getRealPath(
+                    this@AddBusiness,
+                    captureLicenseFile!!
+                )
+                file1 = File(path1)
+                builder.addFormDataPart(
+                    "license", file1.name, RequestBody.create(
+                        "multipart/form-data".toMediaTypeOrNull(), file1
+                    )
+                )*/
+                file1 = File(captureLicenseFile.toString())
+                builder.addFormDataPart(
+                    "license", file1.name, RequestBody.create(
+                        "multipart/form-data".toMediaTypeOrNull(), file1
+                    )
+                )
+
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -398,9 +389,12 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         val file2: File?
         if (captureIdProofFile != null) {
             try {
-                file2 = FileUtil.from(this, captureIdProofFile)
-                builder.addFormDataPart("id_proof", Utility.getFileName(this, Uri.fromFile(file2)), RequestBody.create(
-                    "multipart/form-data".toMediaTypeOrNull(), file2))
+                file2 = File(captureIdProofFile.toString())
+                builder.addFormDataPart(
+                    "id_proof", file2.name, RequestBody.create(
+                        "multipart/form-data".toMediaTypeOrNull(), file2
+                    )
+                )
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -438,8 +432,8 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
             Toast.makeText(this@AddBusiness, body.message, Toast.LENGTH_SHORT).show()
             Session(this@AddBusiness).createLoginSession()
             val intent = Intent(this, HomeActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK )
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finishAffinity()
         }
@@ -450,11 +444,11 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         countryList.clear()
         if (status == 1){
             body.data?.let { countryList.addAll(it) }
-            countryDialogBinding = DataBindingUtil.inflate<PopupDialogLayoutBinding>(
+            countryDialogBinding = DataBindingUtil.inflate<PopupListSearchDialogLayoutBinding>(
                 LayoutInflater.from(
                     this@AddBusiness
                 ),
-                R.layout.popup_dialog_layout, binding.root as ViewGroup, false
+                R.layout.popup_list_search_dialog_layout, binding.root as ViewGroup, false
             )
             countryDialog = Dialog(Objects.requireNonNull(this@AddBusiness))
             countryDialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -464,17 +458,54 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             countryDialog.show()
+            countryDialogBinding.title.text = getString(R.string.select_country)
+            countryDialogBinding.ivClose.setOnClickListener { countryDialog.dismiss() }
 
             countryAdapter = AdapterCountry(this@AddBusiness, countryList, this)
             countryDialogBinding.recyclerView.layoutManager = LinearLayoutManager(this@AddBusiness)
             countryDialogBinding.recyclerView.itemAnimator = DefaultItemAnimator()
             countryDialogBinding.recyclerView.adapter = countryAdapter
             countryAdapter.notifyDataSetChanged()
+
+            countryDialogBinding.etSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    filterCountryList(s.trim().toString(), countryList.toMutableList())
+                }
+            })
+
         }
         else if (status ==0){
             Utility.showToast(this@AddBusiness, body.message)
         }
 
+    }
+
+    private fun filterCountryList(
+        toString: String,
+        countryModel: MutableList<ModelCountryList.DataBean>
+    ) {
+        var countryModel_12: MutableList<ModelCountryList.DataBean> = countryModel
+        countryModel_12 = java.util.ArrayList<ModelCountryList.DataBean>()
+        for (item in countryList) {
+            if (item.name?.toLowerCase(Locale.ROOT)!!.contains(
+                    toString.toLowerCase(Locale.ROOT).toUpperCase(
+                        Locale.ROOT
+                    )
+                )
+                || item.name!!.toUpperCase(Locale.ROOT).contains(toString.toUpperCase(Locale.ROOT))) {
+                countryModel_12.add(item)
+            }
+        }
+        countryAdapter.filterCountryList(countryModel_12)
     }
 
     override fun onStateListSuccess(body: ModelState?) {
@@ -498,14 +529,101 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
 
     private fun requestToUploadProfilePhoto() {
         if (!hasPermissions(this@AddBusiness, *PERMISSIONS_Photo)) {
-            ActivityCompat.requestPermissions(this@AddBusiness, PERMISSIONS_Photo, PERMISSION_CAMERA_EXTERNAL_STORAGE_CODE)
+            ActivityCompat.requestPermissions(
+                this@AddBusiness,
+                PERMISSIONS_Photo,
+                PERMISSION_CAMERA_EXTERNAL_STORAGE_CODE
+            )
         } else if (hasPermissions(this@AddBusiness, *PERMISSIONS_Photo)) {
             openCameraDialog()
         }
     }
 
+    private fun fileUploadRequest(type: Int){
+        if (!hasPermissions(this@AddBusiness, *PERMISSIONS_Photo)) {
+            ActivityCompat.requestPermissions(
+                this@AddBusiness,
+                PERMISSIONS_Photo,
+                PERMISSION_EXTERNAL_STORAGE_CODE
+            )
+        } else if (hasPermissions(this@AddBusiness, *PERMISSIONS_Photo)) {
+            if (type == 1)
+                licenseFileUpload()
+            else
+                idProofFileUpload()
+        }
+    }
+
+    private fun licenseFileUpload(){
+        val chooser = StorageChooser.Builder()
+            .withActivity(this@AddBusiness)
+            .withFragmentManager(fragmentManager)
+            .withMemoryBar(true)
+            .allowCustomPath(true)
+            .setType(StorageChooser.FILE_PICKER)
+            .build()
+        chooser.setOnSelectListener { path ->
+            Log.e("LicenseFile", path)
+
+            if (path.contains("pdf") || path.contains("doc") || path.contains("PDF") || path.contains(
+                    "DOC"
+                ) || path.contains("xls") || path.contains("txt") || path.contains("png")
+                || path.contains("jpeg") || path.contains("jpg")
+            ) {
+                captureLicenseFile = Uri.parse(path)
+                Log.e("LicenseFile", path)
+                binding.tvLicenseName.text = "File Selected"
+
+            } else {
+                Toast.makeText(
+                    this@AddBusiness,
+                    "Please select valid file",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        chooser.show()
+    }
+
+    private fun idProofFileUpload(){
+        val chooser2 = StorageChooser.Builder()
+            .withActivity(this@AddBusiness)
+            .withFragmentManager(fragmentManager)
+            .withMemoryBar(true)
+            .allowCustomPath(true)
+            .setType(StorageChooser.FILE_PICKER)
+            .build()
+        chooser2.setOnSelectListener { path ->
+            Log.e("LicenseFile", path)
+
+            if (path.contains("pdf") || path.contains("doc") || path.contains("PDF") || path.contains(
+                    "DOC"
+                ) || path.contains("xls") || path.contains("txt") || path.contains("png")
+                || path.contains("jpeg") || path.contains("jpg")
+            ) {
+                captureIdProofFile = Uri.parse(path)
+                Log.e("IdFile", path)
+                //val fileName = Utility.getFileName(this@AddBusiness, captureIdProofFile)
+                //val file2 = FileUtil.from(this, captureIdProofFile)
+                binding.tvIdProofName.text = "File Selected"
+
+            } else {
+                Toast.makeText(
+                    this@AddBusiness,
+                    "Please select valid file",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        chooser2.show()
+    }
+
     private fun openCameraDialog() {
-        val items = arrayOf<CharSequence>(getString(R.string.take_photo), getString(R.string.choose_from_gallery), getString(R.string.cancel))
+        val items = arrayOf<CharSequence>(
+            getString(R.string.take_photo), getString(R.string.choose_from_gallery), getString(
+                R.string.cancel
+            )
+        )
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.add_photo))
         builder.setItems(items) { dialogInterface, i ->
@@ -539,7 +657,11 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
 
     private fun getOutputMediaFileUri(type: Int): Uri {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID.toString() + ".provider", getOutputMediaFile(type)!!)
+            FileProvider.getUriForFile(
+                this, BuildConfig.APPLICATION_ID.toString() + ".provider", getOutputMediaFile(
+                    type
+                )!!
+            )
         } else {
             Uri.fromFile(getOutputMediaFile(type))
         }
@@ -548,21 +670,29 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
     private fun getOutputMediaFile(type: Int): File? {
         val mediaStorageDir = File(
             Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), IMAGE_DIRECTORY_NAME)
+                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+            IMAGE_DIRECTORY_NAME
+        )
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             mediaStorageDir.mkdirs()
         }
         // Create a media file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss",
-            Locale.getDefault()).format(Date())
+        val timeStamp = SimpleDateFormat(
+            "yyyyMMdd_HHmmss",
+            Locale.getDefault()
+        ).format(Date())
         val mediaFile: File
         mediaFile = if (type == MEDIA_TYPE_IMAGE) {
-            File(mediaStorageDir.path + File.separator
-                    + "IMG_" + timeStamp + ".png")
+            File(
+                mediaStorageDir.path + File.separator
+                        + "IMG_" + timeStamp + ".png"
+            )
         } else if (type == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO) {
-            File(mediaStorageDir.path + File.separator
-                    + "VID_" + timeStamp + ".mp4")
+            File(
+                mediaStorageDir.path + File.separator
+                        + "VID_" + timeStamp + ".mp4"
+            )
         } else {
             return null
         }
@@ -574,8 +704,10 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         var realpath = ""
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
         // Get the cursor
-        val cursor = contentResolver.query(ur!!,
-            filePathColumn, null, null, null)!!
+        val cursor = contentResolver.query(
+            ur!!,
+            filePathColumn, null, null, null
+        )!!
         cursor.moveToFirst()
         val columnIndex = cursor.getColumnIndex(filePathColumn[0])
         //Log.e("columnIndex", String.valueOf(MediaStore.Images.Media.DATA));
@@ -593,17 +725,50 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         return true
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_CAMERA_EXTERNAL_STORAGE_CODE) {
             if (grantResults.isNotEmpty()) { /*  if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {*/
                 if (hasAllPermissionsGranted(grantResults)) {
                     openCameraDialog()
                 } else {
-                    Toast.makeText(this, "Please grant both Camera and Storage permissions", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Please grant both Camera and Storage permissions",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else if (!hasAllPermissionsGranted(grantResults)) {
-                Toast.makeText(this, "Please grant both Camera and Storage permissions", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Please grant both Camera and Storage permissions",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }else if(requestCode == PERMISSION_EXTERNAL_STORAGE_CODE){
+            if (grantResults.isNotEmpty()) { /*  if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {*/
+                if (hasAllPermissionsGranted(grantResults)) {
+                    if (uploadFileType == 1)
+                        licenseFileUpload()
+                    else
+                        idProofFileUpload()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Please grant both Camera and Storage permissions",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else if (!hasAllPermissionsGranted(grantResults)) {
+                Toast.makeText(
+                    this,
+                    "Please grant both Camera and Storage permissions",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -613,6 +778,17 @@ class AddBusiness : BaseActivity(), IAddBusinessView, AdapterCategory.OnItemClic
         binding.edCountryAB.setText(s.name)
         countryDialog.dismiss()
     }
+
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+        doubleBackToExitPressedOnce = true
+        Toast.makeText(this, R.string.click_to_exit, Toast.LENGTH_SHORT).show()
+        Handler(Looper.getMainLooper()).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
 }
 
 

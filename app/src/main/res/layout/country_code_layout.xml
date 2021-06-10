@@ -10,9 +10,9 @@
         android:id="@+id/rltvSelectedD"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/_10sdp"
         android:onClick="onClick"
-        android:paddingBottom="10dp"
+        android:paddingBottom="@dimen/_10sdp"
         android:background="@color/white">
 
 
@@ -21,11 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginStart="15dp"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:fontFamily="@font/open_sans_semibold"
             android:layout_toStartOf="@+id/tvCountryCodeD"
-            android:layout_marginEnd="15dp"
-            android:textColor="@color/black"/>
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:textColor="@color/text_colour"/>
 
         <TextView
             android:id="@+id/tvCountryCodeD"
@@ -34,10 +35,11 @@
             android:text=""
             android:fontFamily="@font/open_sans_regular"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:visibility="visible"
-            android:textColor="@color/black"/>
+            android:textSize="14sp"
+            android:textColor="@color/text_colour"/>
 
     </RelativeLayout>
 </LinearLayout>

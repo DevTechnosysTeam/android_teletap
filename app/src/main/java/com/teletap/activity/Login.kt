@@ -91,6 +91,7 @@ class Login : BaseActivity(), ILoginView {
                 val intent = Intent(this, SignUp::class.java)
                 intent.putExtra("cameFrom", "login")
                 startActivity(intent)
+                finish()
             }
             R.id.btnLogin ->{
                 Utility.hideKeyboard(this@Login)
@@ -106,8 +107,12 @@ class Login : BaseActivity(), ILoginView {
                 Utility.hideKeyboard(this@Login)
                 dialogCountryCode()
             }
+            R.id.imgBackLogin ->{
+                onBackPressed()
+            }
         }
     }
+
 
     private fun checkMobileValidation() {
         if (TextUtils.isEmpty(binding.edCountryCodeLogin.text.toString())) {
@@ -175,7 +180,7 @@ class Login : BaseActivity(), ILoginView {
             if (body.data?.sms_verified_status == 0){
                 val intent = Intent(this, OtpVerification::class.java)
                 intent.putExtra("cameFrom", "login")
-                body.data?.let { intent.putExtra("user_id", it.user_id) }
+                body.data?.let { intent.putExtra("user_id", it.id) }
                 intent.putExtra("isNumberVerified", false)
                 startActivity(intent)
                 finish()

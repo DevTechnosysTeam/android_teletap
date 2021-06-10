@@ -53,7 +53,7 @@ class DetailsContact : BaseActivity(), IContactDetailView, AdapterTransitionHist
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this@DetailsContact)
-        adapter = AdapterTransitionHistoryCD(this@DetailsContact, /*modelList,*/ this);
+        adapter = AdapterTransitionHistoryCD(this@DetailsContact, modelList, this);
         binding.recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
 
@@ -74,7 +74,7 @@ class DetailsContact : BaseActivity(), IContactDetailView, AdapterTransitionHist
         }
     }
 
-    override fun onChatItemClick(view: View?, index: Int) {
+    override fun onAdapterItemClick(view: View?, index: Int , modelBean : ModelDetailsContact.DataBean.TransactionHistoryBean) {
 
     }
 
@@ -114,7 +114,7 @@ class DetailsContact : BaseActivity(), IContactDetailView, AdapterTransitionHist
         val status = body!!.status
         if (status == 1) {
             binding.contactName.text = body.data?.name
-            binding.tvMobileNumber.text = body.data?.country_code + body.data?.mobile
+            (body.data?.country_code + body.data?.mobile).also { binding.tvMobileNumber.text = it }
             binding.tvEmail.text = body.data?.email
 
             body.data?.transaction_history.let {

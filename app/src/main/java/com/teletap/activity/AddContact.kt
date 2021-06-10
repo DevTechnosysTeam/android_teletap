@@ -2,10 +2,9 @@ package com.teletap.activity
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
@@ -37,6 +36,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+
 
 class AddContact : BaseActivity(), IAddContactView, View.OnClickListener {
     lateinit var binding : AddContactActivityBinding
@@ -79,6 +79,9 @@ class AddContact : BaseActivity(), IAddContactView, View.OnClickListener {
         //binding.toolBarAC.title.text = getString(R.string.add_contact)
         binding.toolBarAC.imgBack.setOnClickListener { onBackPressed() }
 
+        binding.edNameAC.inputType =
+            InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+
         binding.edCountryCodeAC.setOnClickListener(this)
         binding.btnSaveAC.setOnClickListener(this)
 
@@ -103,10 +106,10 @@ class AddContact : BaseActivity(), IAddContactView, View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-           R.id. edCountryCodeAC ->{
-               Utility.hideKeyboard(this@AddContact)
-               dialogCountryCode()
-           }
+            R.id.edCountryCodeAC -> {
+                Utility.hideKeyboard(this@AddContact)
+                dialogCountryCode()
+            }
             R.id.btnSaveAC -> {
                 Utility.hideKeyboard(this@AddContact)
                 checkValidations()
@@ -148,7 +151,10 @@ class AddContact : BaseActivity(), IAddContactView, View.OnClickListener {
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog1.setContentView(R.layout.dialog_country_code_picker_layout)
         recyclerView = dialog1.findViewById(R.id.ccRecycler)
-        dialog1.window!!.setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+        dialog1.window!!.setLayout(
+            ViewGroup.LayoutParams.FILL_PARENT,
+            ViewGroup.LayoutParams.FILL_PARENT
+        );
         val etSearch : EditText = dialog1.findViewById(R.id.etSearch)
         val ivClose: ImageView = dialog1.findViewById(R.id.ivClose)
         layoutManager = LinearLayoutManager(this)
@@ -185,8 +191,11 @@ class AddContact : BaseActivity(), IAddContactView, View.OnClickListener {
         var codeModels_12: MutableList<CountryModel?> = codeModels12
         codeModels_12 = ArrayList<CountryModel?>()
         for (item in codeModels) {
-            if (item.countryName.toLowerCase(Locale.ROOT).contains(toString.toLowerCase(Locale.ROOT).toUpperCase(
-                    Locale.ROOT))
+            if (item.countryName.toLowerCase(Locale.ROOT).contains(
+                    toString.toLowerCase(Locale.ROOT).toUpperCase(
+                        Locale.ROOT
+                    )
+                )
                 || item.countryName.toUpperCase(Locale.ROOT).contains(toString.toUpperCase(Locale.ROOT))) {
                 codeModels_12.add(item)
             }

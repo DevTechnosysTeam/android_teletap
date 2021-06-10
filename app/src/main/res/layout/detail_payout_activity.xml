@@ -6,8 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.DetailPayout"
-    android:background="@color/white">
+    tools:context=".activity.DetailPayout">
 
         <include
             android:id="@+id/toolBar"
@@ -36,35 +35,57 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@id/cardViewLayout"
                     app:layout_constraintTop_toTopOf="@id/cardViewLayout"
-                    android:text="Nice Herbal Beauty Shop"
                     android:textColor="#3282B8"
                     android:fontFamily="@font/open_sans_bold"
                     android:textSize="16sp"/>
 
                 <TextView
-                    android:id="@+id/tax"
+                    android:id="@+id/transactionId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@id/name"
                     app:layout_constraintTop_toBottomOf="@id/name"
-                    android:text="Tax"
+                    android:text="Txn. Id:"
                     android:textColor="#575B5E"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textSize="14sp"
-                    android:fontFamily="@font/open_sans_semibold"/>
+                    android:fontFamily="@font/open_sans_regular"/>
 
                 <TextView
+                    android:id="@+id/tvTransactionId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/tax"
-                    app:layout_constraintBottom_toBottomOf="@id/tax"
+                    app:layout_constraintTop_toTopOf="@id/transactionId"
+                    app:layout_constraintBottom_toBottomOf="@id/transactionId"
                     app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
-                    android:text="10%"
                     android:fontFamily="@font/open_sans_regular"
                     android:textSize="14sp"
                     android:textColor="#575B5E"/>
 
                 <TextView
+                    android:id="@+id/tax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/transactionId"
+                    app:layout_constraintTop_toBottomOf="@id/transactionId"
+                    android:text="Tax:"
+                    android:textColor="#575B5E"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/open_sans_regular"/>
+
+                <TextView
+                    android:id="@+id/tvTax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tax"
+                    app:layout_constraintBottom_toBottomOf="@id/tax"
+                    app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:textSize="14sp"
+                    android:textColor="#575B5E"/>
+
+                <!--<TextView
                     android:id="@+id/extraCharges"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,27 +106,27 @@
                     android:text="15%"
                     android:fontFamily="@font/open_sans_regular"
                     android:textSize="14sp"
-                    android:textColor="#575B5E"/>
+                    android:textColor="#575B5E"/>-->
 
                 <TextView
                     android:id="@+id/CurrencyExchange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/extraCharges"
-                    app:layout_constraintTop_toBottomOf="@id/extraCharges"
-                    android:text="Currency exchange charge"
+                    app:layout_constraintStart_toStartOf="@id/tax"
+                    app:layout_constraintTop_toBottomOf="@id/tax"
+                    android:text="Currency Exchange Charge:"
                     android:textColor="#575B5E"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textSize="14sp"
-                    android:fontFamily="@font/open_sans_semibold"/>
+                    android:fontFamily="@font/open_sans_regular"/>
 
                 <TextView
+                    android:id="@+id/tvExchangeCharge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/CurrencyExchange"
                     app:layout_constraintBottom_toBottomOf="@id/CurrencyExchange"
                     app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
-                    android:text="12%"
                     android:fontFamily="@font/open_sans_regular"
                     android:textSize="14sp"
                     android:textColor="#575B5E"/>
@@ -120,15 +141,15 @@
                     android:textColor="#575B5E"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:textSize="14sp"
-                    android:fontFamily="@font/open_sans_semibold"/>
+                    android:fontFamily="@font/open_sans_regular"/>
 
                 <TextView
+                    android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/date"
                     app:layout_constraintBottom_toBottomOf="@id/date"
                     app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
-                    android:text="09/04/2021"
                     android:fontFamily="@font/open_sans_regular"
                     android:textSize="14sp"
                     android:textColor="#575B5E"/>
@@ -141,19 +162,19 @@
                     app:layout_constraintTop_toBottomOf="@id/date"
                     android:text="Total Charge"
                     android:textColor="#575B5E"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:textSize="16sp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:textSize="18sp"
                     android:fontFamily="@font/open_sans_bold"/>
 
                 <TextView
+                    android:id="@+id/tvTotalAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/totalCharge"
                     app:layout_constraintBottom_toBottomOf="@id/totalCharge"
                     app:layout_constraintEnd_toEndOf="@id/cardViewLayout"
-                    android:text="237"
                     android:fontFamily="@font/open_sans_bold"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="#575B5E"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

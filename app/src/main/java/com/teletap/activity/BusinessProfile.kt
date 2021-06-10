@@ -12,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +37,7 @@ import com.teletap.adapter.AdapterCountry
 import com.teletap.adapter.AdapterState
 import com.teletap.databinding.BusinessProfileActivityBinding
 import com.teletap.databinding.PopupDialogLayoutBinding
+import com.teletap.databinding.PopupListSearchDialogLayoutBinding
 import com.teletap.model.*
 import com.teletap.presenterClasses.AddBusiness_Presenter
 import com.teletap.utilities.FileUtil
@@ -79,19 +83,19 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
     //countryList
     private val countryList:ArrayList<ModelCountryList.DataBean> = ArrayList<ModelCountryList.DataBean>()
     private var countryId : Int = 0
-    lateinit var countryDialogBinding : PopupDialogLayoutBinding
+    lateinit var countryDialogBinding : PopupListSearchDialogLayoutBinding
     lateinit var countryDialog : Dialog
     lateinit var countryAdapter : AdapterCountry
     //stateList
     private val stateList:ArrayList<ModelState.DataBean> = ArrayList<ModelState.DataBean>()
     private var stateId : Int = 0
-    lateinit var stateDialogBinding : PopupDialogLayoutBinding
+    lateinit var stateDialogBinding : PopupListSearchDialogLayoutBinding
     lateinit var stateDialog : Dialog
     lateinit var stateAdapter : AdapterState
     //cityList
     private val cityList:ArrayList<ModelCity.DataBean> = ArrayList<ModelCity.DataBean>()
     private var cityId : Int = 0
-    lateinit var cityDialogBinding : PopupDialogLayoutBinding
+    lateinit var cityDialogBinding : PopupListSearchDialogLayoutBinding
     lateinit var cityDialog : Dialog
     lateinit var cityAdapter : AdapterCity
 
@@ -101,7 +105,7 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
         binding = DataBindingUtil.setContentView(this, R.layout.business_profile_activity)
 
         binding.toolBarBP.imgBack.setOnClickListener { onBackPressed() }
-        binding.toolBarBP.title.text = "Business Profile"
+        binding.toolBarBP.title.text = getString(R.string.business_profile)
 
         presenterAddBusiness = AddBusiness_Presenter()
         presenterAddBusiness.view = this
@@ -114,6 +118,9 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
         token = userInfo.token.toString()
 
         getBusinessProfileApi()
+
+        binding.edSocialMedia.movementMethod = LinkMovementMethod.getInstance()
+        binding.edWebsite.movementMethod = LinkMovementMethod.getInstance()
 
         binding.edEmailBP.isEnabled = false
         binding.edMobileNoBP.isEnabled = false
@@ -192,21 +199,25 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
 
             binding.edBusinessNameBP.setText(body.data?.user_detail?.business_name)
             binding.edDisplayNameBP.setText(body.data?.user_detail?.display_name)
+            binding.edTaxNumberBP.setText(body.data?.user_detail?.business_tax_id)
             category_id = body.data?.user_detail?.category_id!!
             binding.tvCategory.setText( body.data?.user_detail?.category_name)
 
             binding.edWebsite.setText(body.data?.user_detail?.website)
             binding.edSocialMedia.setText(body.data?.user_detail?.social_media)
 
-            if (body.data?.user_detail?.country_name!=""){
+            if (body.data?.user_detail?.country_name!="" || body.data?.user_detail?.country !=null){
+                countryId = body.data?.user_detail?.country?.toInt()!!
                 binding.edCountry.setText(body.data?.user_detail?.country_name)
             }
 
-            if (body.data?.user_detail?.state_name!=""){
+            if (body.data?.user_detail?.state_name!="" || body.data?.user_detail?.state!=null){
+                stateId = body.data?.user_detail?.state?.toInt()!!
                 binding.edState.setText(body.data?.user_detail?.state_name)
             }
 
-            if (body.data?.user_detail?.city_name!=""){
+            if (body.data?.user_detail?.city_name!="" || body.data?.user_detail?.city!=null){
+                cityId = body.data?.user_detail?.city?.toInt()!!
                 binding.edCity.setText(body.data?.user_detail?.city_name)
             }
 
@@ -285,6 +296,9 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
         }else if (TextUtils.isEmpty(binding.edDisplayNameBP.text.toString().trim())) {
             Toast.makeText(this@BusinessProfile, "Please enter your business display name", Toast.LENGTH_SHORT).show()
             binding.edDisplayNameBP.requestFocus()
+        }else if (TextUtils.isEmpty(binding.edTaxNumberBP.text.toString().trim())) {
+            Toast.makeText(this@BusinessProfile, "Please enter business tax number", Toast.LENGTH_SHORT).show()
+            binding.edTaxNumberBP.requestFocus()
         }/*else if (captureLicenseFile == null){
             Toast.makeText(this@AddBusiness, "Please select your shop/business license", Toast.LENGTH_SHORT).show()
         }else if (captureIdProofFile == null){
@@ -316,6 +330,7 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
         builder.addFormDataPart("last_name", binding.edLastNameBP.text.toString().trim())
         builder.addFormDataPart("business_name", binding.edBusinessNameBP.text.toString().trim())
         builder.addFormDataPart("display_name", binding.edDisplayNameBP.text.toString().trim())
+        builder.addFormDataPart("business_tax_id", binding.edTaxNumberBP.text.toString().trim())
         //builder.addFormDataPart("about_business", binding.edAboutAB.text.toString().trim())
         builder.addFormDataPart("website", binding.edWebsite.text.toString().trim())
         builder.addFormDataPart("social_media", binding.edSocialMedia.text.toString().trim())
@@ -386,11 +401,11 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
         countryList.clear()
         if (status == 1){
             body.data?.let { countryList.addAll(it) }
-            countryDialogBinding = DataBindingUtil.inflate<PopupDialogLayoutBinding>(
+            countryDialogBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(
                     this@BusinessProfile
                 ),
-                R.layout.popup_dialog_layout, binding.root as ViewGroup, false
+                R.layout.popup_list_search_dialog_layout, binding.root as ViewGroup, false
             )
             countryDialog = Dialog(Objects.requireNonNull(this@BusinessProfile))
             countryDialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -400,16 +415,42 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
             countryDialog.show()
+            countryDialogBinding.title.text = getString(R.string.select_country)
+            countryDialogBinding.ivClose.setOnClickListener { countryDialog.dismiss() }
 
             countryAdapter = AdapterCountry(this@BusinessProfile, countryList, this)
             countryDialogBinding.recyclerView.layoutManager = LinearLayoutManager(this@BusinessProfile)
             countryDialogBinding.recyclerView.itemAnimator = DefaultItemAnimator()
             countryDialogBinding.recyclerView.adapter = countryAdapter
             countryAdapter.notifyDataSetChanged()
+
+            countryDialogBinding.etSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    filterCountryList(s.trim().toString(), countryList.toMutableList())
+                }
+            })
         }
         else if (status ==0){
             Utility.showToast(this@BusinessProfile, body.message)
         }
+    }
+
+    private fun filterCountryList(toString: String, countryModel: MutableList<ModelCountryList.DataBean>) {
+        var countryModel_12: MutableList<ModelCountryList.DataBean> = countryModel
+        countryModel_12 = java.util.ArrayList<ModelCountryList.DataBean>()
+        for (item in countryList) {
+            if (item.name?.toLowerCase(Locale.ROOT)!!.contains(
+                    toString.toLowerCase(Locale.ROOT).toUpperCase(
+                        Locale.ROOT
+                    )
+                )
+                || item.name!!.toUpperCase(Locale.ROOT).contains(toString.toUpperCase(Locale.ROOT))) {
+                countryModel_12.add(item)
+            }
+        }
+        countryAdapter.filterCountryList(countryModel_12)
     }
 
     override fun onSelectedCountry(view: View?, index: Int, s: ModelCountryList.DataBean) {
@@ -439,11 +480,11 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
         stateList.clear()
         if (status == 1){
             body.data?.let { stateList.addAll(it) }
-            stateDialogBinding = DataBindingUtil.inflate<PopupDialogLayoutBinding>(
+            stateDialogBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(
                     this@BusinessProfile
                 ),
-                R.layout.popup_dialog_layout, binding.root as ViewGroup, false
+                R.layout.popup_list_search_dialog_layout, binding.root as ViewGroup, false
             )
             stateDialog = Dialog(Objects.requireNonNull(this@BusinessProfile))
             stateDialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -454,16 +495,43 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
             )
             stateDialog.show()
 
+            stateDialogBinding.title.text = getString(R.string.select_state)
+            stateDialogBinding.ivClose.setOnClickListener { stateDialog.dismiss() }
+
             stateAdapter = AdapterState(this@BusinessProfile, stateList, this)
             stateDialogBinding.recyclerView.layoutManager = LinearLayoutManager(this@BusinessProfile)
             stateDialogBinding.recyclerView.itemAnimator = DefaultItemAnimator()
             stateDialogBinding.recyclerView.adapter = stateAdapter
             stateAdapter.notifyDataSetChanged()
+
+            stateDialogBinding.etSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    filterStateList(s.trim().toString(), stateList.toMutableList())
+                }
+            })
         }
         else if (status ==0){
             Utility.showToast(this@BusinessProfile, body.message)
         }
 
+    }
+
+    private fun filterStateList(toString: String, modelList: MutableList<ModelState.DataBean>) {
+        var modelList1: MutableList<ModelState.DataBean> = modelList
+        modelList1 = java.util.ArrayList<ModelState.DataBean>()
+        for (item in stateList) {
+            if (item.name?.toLowerCase(Locale.ROOT)!!.contains(
+                    toString.toLowerCase(Locale.ROOT).toUpperCase(
+                        Locale.ROOT
+                    )
+                )
+                || item.name!!.toUpperCase(Locale.ROOT).contains(toString.toUpperCase(Locale.ROOT))) {
+                modelList1.add(item)
+            }
+        }
+        stateAdapter.filterStateList(modelList1)
     }
 
     override fun onSelectedState(view: View?, index: Int, s: ModelState.DataBean) {
@@ -478,7 +546,7 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
     private fun getCityList(){
         if (Utility.hasConnection(this@BusinessProfile)) {
             val map: MutableMap<String, Any> = HashMap()
-            map["state_id"] = ""+ countryId
+            map["state_id"] = ""+ stateId
             presenterAddBusiness.getCityListApi(this@BusinessProfile, map)
         }else {
             Utility.showToast(this@BusinessProfile, getString(R.string.no_network_message))
@@ -490,11 +558,11 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
         cityList.clear()
         if (status == 1){
             body.data?.let { cityList.addAll(it) }
-            cityDialogBinding = DataBindingUtil.inflate<PopupDialogLayoutBinding>(
+            cityDialogBinding = DataBindingUtil.inflate<PopupListSearchDialogLayoutBinding>(
                 LayoutInflater.from(
                     this@BusinessProfile
                 ),
-                R.layout.popup_dialog_layout, binding.root as ViewGroup, false
+                R.layout.popup_list_search_dialog_layout, binding.root as ViewGroup, false
             )
             cityDialog = Dialog(Objects.requireNonNull(this@BusinessProfile))
             cityDialog .requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -505,15 +573,42 @@ class BusinessProfile : BaseActivity(), IAddBusinessView, AdapterCategory.OnItem
             )
             cityDialog.show()
 
+            cityDialogBinding.title.text = getString(R.string.select_city)
+            cityDialogBinding.ivClose.setOnClickListener { cityDialog.dismiss() }
+
             cityAdapter = AdapterCity(this@BusinessProfile, cityList, this)
             cityDialogBinding.recyclerView.layoutManager = LinearLayoutManager(this@BusinessProfile)
             cityDialogBinding.recyclerView.itemAnimator = DefaultItemAnimator()
             cityDialogBinding.recyclerView.adapter = cityAdapter
             cityAdapter.notifyDataSetChanged()
+
+            cityDialogBinding.etSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    filterCityList(s.trim().toString(), cityList.toMutableList())
+                }
+            })
         }
         else if (status ==0){
             Utility.showToast(this@BusinessProfile, body.message)
         }
+    }
+
+    private fun filterCityList(toString: String, modelList: MutableList<ModelCity.DataBean>) {
+        var modelList1: MutableList<ModelCity.DataBean> = modelList
+        modelList1 = java.util.ArrayList<ModelCity.DataBean>()
+        for (item in cityList) {
+            if (item.name?.toLowerCase(Locale.ROOT)!!.contains(
+                    toString.toLowerCase(Locale.ROOT).toUpperCase(
+                        Locale.ROOT
+                    )
+                )
+                || item.name!!.toUpperCase(Locale.ROOT).contains(toString.toUpperCase(Locale.ROOT))) {
+                modelList1.add(item)
+            }
+        }
+        cityAdapter.filterCityList(modelList1)
     }
 
     override fun getContext(): Context {

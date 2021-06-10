@@ -8,6 +8,10 @@
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/mtrl_textinput_default_box_stroke_color</item>
+    </style>
+
     <style name="AppBottomSheetDialogTheme"
         parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
@@ -24,6 +28,12 @@
     <style name="OpenSansViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/open_sans_semibold</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="cardStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">#1B71AA</item>
+        <item name="colorPrimary">#607D8B</item>
+        <item name="colorPrimaryDark">#455A64</item>
     </style>
 
     <style name="MySwitch" parent="@style/Widget.AppCompat.CompoundButton.Switch">
@@ -61,6 +71,16 @@
     <style name="CustomCheckbox02" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_selector</item>
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:windowBackground">@color/splash_background</item>
+        <!--<item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>-->
     </style>
 
 </resources>

@@ -2,10 +2,13 @@ package com.teletap.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -43,6 +46,14 @@ class LoginOptions : BaseActivity(),  ISignUpView, GoogleApiClient.OnConnectionF
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_options_activity)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        }else{
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
         presnter = SignupPresenter()
         presnter.view = this
         getFcmToken()
@@ -139,6 +150,7 @@ class LoginOptions : BaseActivity(),  ISignUpView, GoogleApiClient.OnConnectionF
                 intent.putExtra("lastName", googlelName)
                 intent.putExtra("email", googleemail)
                 startActivity(intent)
+                finish()
 
             } else if(body.data?.sms_verified_status == 0 && body.data?.business_setup_status == 0){
                 val intent = Intent(this, OtpVerification::class.java)
@@ -146,6 +158,7 @@ class LoginOptions : BaseActivity(),  ISignUpView, GoogleApiClient.OnConnectionF
                 body.data?.let { intent.putExtra("user_id", it.user_id) }
                 intent.putExtra("isNumberVerified", false)
                 startActivity(intent)
+                finish()
 
             }else if (body.data?.sms_verified_status == 1 && body.data?.business_setup_status == 0) {
                 val intent = Intent(this, AddBusiness::class.java)

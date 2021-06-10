@@ -28,6 +28,7 @@ class ResetPassword : BaseActivity(), IResetPassView{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.reset_password_activity)
+        window.setBackgroundDrawableResource(R.drawable.screen_bg)
         presenterReset = ResetPassPresenter()
         presenterReset.view = this
 

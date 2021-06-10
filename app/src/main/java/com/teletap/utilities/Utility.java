@@ -17,6 +17,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -359,7 +361,46 @@ public class Utility {
         matcher = pattern.matcher(password);
 
         return matcher.matches();
-
     }
+
+    public static InputFilter EMOJI_FILTER = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            for (int index = start; index < end; index++) {
+                int type = Character.getType(source.charAt(index));
+                if (type == Character.SURROGATE) {
+                    return "";
+                }
+            }
+            return null;
+        }
+    };
+
+    private static String blockCharacterSet = ",!@#$%^&amp;*(){}[]:;<|>'?/._+-=~`*/-+";
+
+    public static InputFilter specialCharacterFilter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
+
+    private static String numberSet = "0123456789";
+    public static InputFilter numberFilter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && numberSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
 
 }

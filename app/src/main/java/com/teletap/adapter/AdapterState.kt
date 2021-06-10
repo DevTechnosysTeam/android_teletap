@@ -52,6 +52,11 @@ class AdapterState(private val context: Context, categoryListModels: ArrayList<M
 
     }
 
+    fun filterStateList(stateModels : ArrayList<ModelState.DataBean>) {
+        modelList = stateModels
+        notifyDataSetChanged()
+    }
+
 
     interface OnItemClickListener {
         fun onSelectedState(view: View?, index: Int, s: ModelState.DataBean)

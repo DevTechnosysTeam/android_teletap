@@ -36,11 +36,13 @@ class OtpVerification : BaseActivity(), IVerifyView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.otp_verification_activity)
+        window.setBackgroundDrawableResource(R.drawable.screen_bg)
         presnter = VerifyOtpPresenter()
         getFcmToken()
         presnter.view = this
         if (intent!=null){
             user_id = intent.getIntExtra("user_id", 0)
+            Log.e("userid", user_id.toString())
             cameFrom = intent.getStringExtra("cameFrom").toString()
             isNumberVerified = intent.getBooleanExtra("isNumberVerified", false)
             if (cameFrom == "forgetPassword"){
@@ -73,7 +75,19 @@ class OtpVerification : BaseActivity(), IVerifyView {
                         } else {
                             Utility.showToast(this, getString(R.string.no_network_message))
                         }
-                    } else if (cameFrom == "login" && isNumberVerified) {
+                    } else if (cameFrom == "login" && !isNumberVerified) {
+                        if (Utility.hasConnection(this)) {
+                            val map: MutableMap<String, Any> = HashMap()
+                            map["sms_otp"] = binding.pinView.text.toString()
+                            map["user_id"] = "" + user_id
+                            map["language"] =
+                                "" + LanguagePreference(this@OtpVerification).languageType(this@OtpVerification)
+                            presnter.verifyAccount(this@OtpVerification, map)
+                        } else {
+                            Utility.showToast(this, getString(R.string.no_network_message))
+                        }
+                    }
+                    else if (cameFrom == "login" && isNumberVerified) {
                         if (Utility.hasConnection(this)) {
                             val map: MutableMap<String, Any> = HashMap()
                             map["sms_otp"] = binding.pinView.text.toString()
@@ -86,7 +100,7 @@ class OtpVerification : BaseActivity(), IVerifyView {
                         } else {
                             Utility.showToast(this, getString(R.string.no_network_message))
                         }
-                    }else if (cameFrom == "forgetPassword" && isNumberVerified) {
+                    } else if (cameFrom == "forgetPassword" && isNumberVerified) {
                         if (Utility.hasConnection(this)) {
                             val map: MutableMap<String, Any> = HashMap()
                             map["otp"] = binding.pinView.text.toString()
@@ -98,7 +112,7 @@ class OtpVerification : BaseActivity(), IVerifyView {
                         } else {
                             Utility.showToast(this, getString(R.string.no_network_message))
                         }
-                    }else if (cameFrom == "googleLogin" && !isNumberVerified){
+                    } else if (cameFrom == "googleLogin" && !isNumberVerified) {
                         if (Utility.hasConnection(this)) {
                             val map: MutableMap<String, Any> = HashMap()
                             map["sms_otp"] = binding.pinView.text.toString()
@@ -134,7 +148,7 @@ class OtpVerification : BaseActivity(), IVerifyView {
                     } else {
                         Utility.showToast(this, getString(R.string.no_network_message))
                     }
-                }else if (cameFrom == "forgetPassword" && isNumberVerified){
+                } else if (cameFrom == "forgetPassword" && isNumberVerified) {
                     if (Utility.hasConnection(this)) {
                         val map: MutableMap<String, Any> = HashMap()
                         map["email"] = "" + email
@@ -156,13 +170,14 @@ class OtpVerification : BaseActivity(), IVerifyView {
             Toast.makeText(this@OtpVerification, body.message, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, AddBusiness::class.java)
             AppPreference.saveUserInfo(applicationContext, body.data!!)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK )
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finishAffinity()
             //val intent = Intent(this@OtpVerification, HomeActivity::class.java)
             //startActivity(intent)
         }else{
+            binding.pinView.text?.clear()
             Toast.makeText(this@OtpVerification, body.message, Toast.LENGTH_SHORT).show()
         }
     }
@@ -193,8 +208,8 @@ class OtpVerification : BaseActivity(), IVerifyView {
             if (body.data?.business_setup_status == 0){
                 val intent = Intent(this, AddBusiness::class.java)
                 AppPreference.saveUserInfo(applicationContext, body.data!!)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK )
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finishAffinity()
 
@@ -203,13 +218,14 @@ class OtpVerification : BaseActivity(), IVerifyView {
                 val intent = Intent(this, HomeActivity::class.java)
                 AppPreference.saveUserInfo(applicationContext, body.data!!)
                 //SessionManager.saveUser(_context,false);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP )
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK )
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finishAffinity()
            }
         }else{
             Toast.makeText(this@OtpVerification, body.message, Toast.LENGTH_SHORT).show()
+            binding.pinView.text?.clear()
         }
     }
 
@@ -225,6 +241,7 @@ class OtpVerification : BaseActivity(), IVerifyView {
 
         }else{
             Toast.makeText(this@OtpVerification, body.message, Toast.LENGTH_SHORT).show()
+            binding.pinView.text?.clear()
         }
     }
 

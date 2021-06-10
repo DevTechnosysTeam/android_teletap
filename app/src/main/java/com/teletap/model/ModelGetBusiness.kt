@@ -69,6 +69,7 @@ class ModelGetBusiness {
             var category_id = 0
             var business_name: String? = null
             var display_name: String? = null
+            var business_tax_id: String? = null
             var about_business: String? = null
             var license: String? = null
             var updated_at: String? = null

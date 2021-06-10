@@ -10,6 +10,7 @@
     app:cardCornerRadius="@dimen/_6sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingVertical="@dimen/_12sdp"
@@ -19,7 +20,7 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nice Herbal Beauty Shop"
+            android:text="@string/business_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:fontFamily="@font/open_sans_semibold"
@@ -28,13 +29,12 @@
             />
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/transactionId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvName"
             app:layout_constraintBottom_toBottomOf="@id/tvName"
-            android:text="12/04/2021"
             android:textColor="#3282B8"
             android:textSize="13sp"
             android:fontFamily="@font/open_sans_regular"/>
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tvName"
             app:layout_constraintStart_toStartOf="@id/tvName"
-            android:text="Amount : AED 200"
+            android:text="@string/amount_heading"
             android:fontFamily="@font/open_sans_regular"
             android:textColor="#979797"
             android:textSize="15sp"

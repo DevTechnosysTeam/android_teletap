@@ -14,14 +14,15 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/_5sdp"
         android:src="@drawable/close_blue_icon"
-        android:padding="@dimen/_5sdp"/>
+        android:padding="@dimen/_5sdp"
+        android:contentDescription="@string/close" />
 
     <TextView
         android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Payment successful"
+        android:text="@string/payment_successful"
         android:fontFamily="@font/open_sans_bold"
         android:textColor="#1B262C"
         android:textSize="16sp"
@@ -39,7 +40,7 @@
         android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_below="@id/text1"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "/>
+        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do"/>
 
     <View
         android:id="@+id/view"
@@ -50,12 +51,13 @@
         android:background="#EFEFEF"/>
 
     <TextView
+        android:id="@+id/shareInvoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/view"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_12sdp"
-        android:text="Share invoice"
+        android:text="@string/share_invoice"
         android:textColor="#3282B8"
         android:fontFamily="@font/open_sans_bold"
         android:textSize="14sp"

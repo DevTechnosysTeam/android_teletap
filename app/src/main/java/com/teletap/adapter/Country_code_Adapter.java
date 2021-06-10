@@ -21,8 +21,6 @@ public class Country_code_Adapter extends RecyclerView.Adapter<Country_code_Adap
     private List<CountryModel> modelList;
     CodePicker codePicker;
 
-
-
     public Country_code_Adapter(Context context, List<CountryModel> modelList, CodePicker codePicker) {
 
         this.context = context;

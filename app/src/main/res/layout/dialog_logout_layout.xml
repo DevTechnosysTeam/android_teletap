@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true">-->
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/grey_border_round_corner_bg"
             android:orientation="vertical"
             android:padding="20dp">
@@ -20,7 +21,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Logout"
+                android:text="@string/logout"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 android:fontFamily="@font/open_sans_semibold"
@@ -31,7 +32,7 @@
                 android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Are you sure you want to logout"
+                android:text="@string/are_you_sure_you_want_to_logout"
                 android:textColor="@color/text_colour"
                 android:textSize="14sp"
                 android:fontFamily="@font/open_sans_regular"
@@ -44,7 +45,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/blue_btn_round_corner_bg"
                 android:textSize="14sp"
-                android:text="Yes"
+                android:text="@string/yes"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:fontFamily="@font/open_sans_semibold"
@@ -58,7 +59,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/grey_border_round_corner_bg"
                 android:textSize="14sp"
-                android:text="No"
+                android:text="@string/no"
                 android:fontFamily="@font/open_sans_semibold"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
@@ -98,4 +99,5 @@
         </androidx.appcompat.widget.AppCompatImageView>-->
     </RelativeLayout>
 
-</RelativeLayout>
+<!--
+</RelativeLayout>-->

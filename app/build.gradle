@@ -99,6 +99,9 @@ dependencies {
     implementation 'com.github.codekidX:storage-chooser:2.0.4.4'
 
     implementation 'be.appfoundry:nfc-lib:1.1'
-    compileOnly 'com.google.android.wearable:wearable:2.8.1'
+    implementation 'cards.pay:paycardsrecognizer:1.1.0'
+
+    implementation 'com.braintreepayments:card-form:5.1.1'
+
 
 }

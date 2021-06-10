@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/splash_icon"
         android:layout_marginTop="@dimen/_30sdp"
-        />
+        tools:ignore="ContentDescription" />
 
         <RelativeLayout
             android:id="@+id/googleLogin"
@@ -40,14 +40,14 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:src="@drawable/google_login"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/img1"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="Login with Google"
+                android:text="@string/login_with_google"
                 android:gravity="center"
                 android:textSize="16sp"
                 android:textColor="#1B262C"
@@ -75,14 +75,14 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/email_option"
-            />
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@id/img2"
             android:fontFamily="@font/open_sans_bold"
-            android:text="Login with Email Address"
+            android:text="@string/login_with_email_address"
             android:gravity="center"
             android:textSize="16sp"
             android:textColor="#FFFFFF"

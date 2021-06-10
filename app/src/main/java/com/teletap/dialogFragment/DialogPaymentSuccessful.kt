@@ -17,17 +17,17 @@ import com.teletap.R
 class DialogPaymentSuccessful : DialogFragment() {
     lateinit var mview: View
     //var ocrText: TextView? = null
-    //var nfcText: TextView? = null
+    var shareInvoice : TextView? = null
     lateinit var imgClose : ImageView
 
-    private var completionCallback: ProceedPaymentInterface? = null
+    private var completionCallback: PaymentInterface? = null
 
-    interface ProceedPaymentInterface {
-        //fun onNfc()
-        //fun onOcr()
+    interface PaymentInterface {
+        fun onShareInvoice()
+        fun onClose()
     }
 
-    fun setDataCompletionCallback(completionCallback: ProceedPaymentInterface?) {
+    fun setDataCompletionCallback(completionCallback: PaymentInterface?) {
         this.completionCallback = completionCallback
     }
 
@@ -35,19 +35,15 @@ class DialogPaymentSuccessful : DialogFragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mview = inflater.inflate(R.layout.dialog_payment_successful_layout, container, false)
 
         /*if (arguments != null) {
             textHeading = requireArguments().getString("text")
         }*/
-
         //ocrText = mview.findViewById(R.id.ocrText)
-        //nfcText = mview.findViewById(R.id.nfcText)
+        shareInvoice = mview.findViewById(R.id.shareInvoice)
         imgClose = mview.findViewById(R.id.imgClose)
-
-        imgClose.setOnClickListener { dismiss() }
-
 
         return mview
     }
@@ -57,7 +53,9 @@ class DialogPaymentSuccessful : DialogFragment() {
 
         /*textH?.text = textHeading*/
 
-        //nfcText?.setOnClickListener { completionCallback?.onNfc() }
+        imgClose.setOnClickListener { completionCallback?.onClose() }
+
+        shareInvoice?.setOnClickListener { completionCallback?.onShareInvoice() }
         //ocrText?.setOnClickListener { completionCallback?.onOcr() }
 
     }

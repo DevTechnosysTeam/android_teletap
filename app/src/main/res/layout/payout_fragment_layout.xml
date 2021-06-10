@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="No data found"
+        android:text="@string/no_data_found"
         android:fontFamily="@font/open_sans_semibold"
         android:textColor="@color/colorPrimary"
         android:textSize="12sp"

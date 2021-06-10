@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface Api {
-
+    //X-localization
     //private var language : String = LanguagePreference().getLanguageType().toString()
     companion object {
 
@@ -69,6 +69,7 @@ interface Api {
     fun logout(@FieldMap partMa: MutableMap<String, Any>): Call<SimpleModel?>?
 
     @FormUrlEncoded
+    //@Headers("X-localization: ar")
     @POST("getUserProfile")
     fun getUserProfile(@FieldMap partMa: MutableMap<String, Any>): Call<ProfileModel?>?
 
@@ -125,6 +126,22 @@ interface Api {
     @FormUrlEncoded
     @POST("updateContact")
     fun updateContact(@FieldMap partMa: MutableMap<String, Any>): Call<SimpleModel?>?
+
+    @FormUrlEncoded
+    @POST("updatePaypalToken")
+    fun updatePaypalToken(@FieldMap partMa: MutableMap<String, Any>): Call<BankAccountModel?>?
+
+    @FormUrlEncoded
+    @POST("doCardPayment")
+    fun doCardPayment(@FieldMap partMa: MutableMap<String, Any>): Call<PaymentCardModel?>?
+
+    @FormUrlEncoded
+    @POST("payoutDetails")
+    fun payoutDetails(@FieldMap partMa: MutableMap<String, Any>): Call<DetailsPayoutModel?>?
+
+    @FormUrlEncoded
+    @POST("shareContact")
+    fun shareContact(@FieldMap partMa: MutableMap<String, Any>): Call<ModelShareInvoice?>?
 
     /*@FormUrlEncoded
     @POST("profile/home")

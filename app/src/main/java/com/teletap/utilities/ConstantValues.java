@@ -2,10 +2,13 @@ package com.teletap.utilities;
 
 public class ConstantValues {
 
-    public static String Latitude="Latitude";
-    public static String Longitude="Longitude";
+    public static String PayPalAccountEmail="PayPalAccountEmail";
+    public static String isPayPalAccountPresent="isPayPalAccountPresent";
+    public static String chargeCurrencyExchange="chargeCurrencyExchange";
+    public static String percentCurrencyExchange="percentCurrencyExchange";
 
-    public static String membershipType = "membershipType";
+    public static String isCurrencyUSD = "isCurrencyUSD";
+
     public static String premiumMembershipLimit = "premiumMembershipLimit";
     public static String trialMembershipLimit = "trialMembershipLimit";
 

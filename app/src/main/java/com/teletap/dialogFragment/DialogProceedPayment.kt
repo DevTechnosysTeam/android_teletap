@@ -18,6 +18,7 @@ class DialogProceedPayment : DialogFragment() {
     lateinit var mview: View
     var ocrText: TextView? = null
     var nfcText: TextView? = null
+    var tvTotalAmount: TextView? = null
     lateinit var imgClose : ImageView
 
     private var completionCallback: ProceedPaymentInterface? = null
@@ -38,16 +39,12 @@ class DialogProceedPayment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mview = inflater.inflate(R.layout.proceed_payment_dialog_layout, container, false)
 
-        /*if (arguments != null) {
-            textHeading = requireArguments().getString("text")
-        }*/
-
         ocrText = mview.findViewById(R.id.ocrText)
         nfcText = mview.findViewById(R.id.nfcText)
+        tvTotalAmount = mview.findViewById(R.id.tvTotalAmount)
         imgClose = mview.findViewById(R.id.imgClose)
 
         imgClose.setOnClickListener { dismiss() }
-
 
         return mview
     }
@@ -56,6 +53,10 @@ class DialogProceedPayment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         /*textH?.text = textHeading*/
+
+        if (arguments != null) {
+            tvTotalAmount?.text = requireArguments().getString("currencySymbol")+requireArguments().getFloat("totalAmount", 0.0f).toString()
+        }
 
         nfcText?.setOnClickListener { completionCallback?.onNfc() }
         ocrText?.setOnClickListener { completionCallback?.onOcr() }

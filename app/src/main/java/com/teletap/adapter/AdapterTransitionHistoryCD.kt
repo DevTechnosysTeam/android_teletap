@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teletap.R
 import com.teletap.databinding.ItemContactListLayoutBinding
 import com.teletap.databinding.ItemTransitionHistoryLayoutBinding
+import com.teletap.model.ModelDetailsContact
 import kotlin.collections.ArrayList
 
-class AdapterTransitionHistoryCD(private val context: Context, /*private val modelList: ArrayList<ModelChatThreads.ThreadBean>,*/
-                         private val onItemClickListener: OnItemClickListener)
+class AdapterTransitionHistoryCD(private val context: Context, private val modelList: ArrayList<ModelDetailsContact.DataBean.TransactionHistoryBean>,
+                                 private val onItemClickListener: OnItemClickListener)
     : RecyclerView.Adapter<AdapterTransitionHistoryCD.MyViewHolder>() {
     //private var modelList = ArrayList<ModelChatThreads.ThreadBean>()
     //var context: Context
@@ -30,21 +31,24 @@ class AdapterTransitionHistoryCD(private val context: Context, /*private val mod
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val binding = holder.binding as ItemTransitionHistoryLayoutBinding
+        binding.tvName.text = modelList[position].transaction_details?.business_name
+        binding.transactionId.text = modelList[position].transaction_details?.transaction_id
 
+        binding.tvAmount.text = "Amount :"+modelList[position].transaction_details?.currency_type+modelList[position].transaction_details?.vendor_amount
 
-        /*binding.mainLayout.setOnClickListener { view ->
-            onItemClickListener.onChatItemClick(view, holder.adapterPosition, modelList[holder.adapterPosition])
-        }*/
+        binding.mainLayout.setOnClickListener { view ->
+            onItemClickListener.onAdapterItemClick(view, holder.bindingAdapterPosition, modelList[holder.bindingAdapterPosition])
+        }
 
     }
 
     interface OnItemClickListener {
-        fun onChatItemClick(view: View?, index: Int/*, modelBean : ModelChatThreads.ThreadBean*/)
+        fun onAdapterItemClick(view: View?, index: Int, modelBean : ModelDetailsContact.DataBean.TransactionHistoryBean)
 
     }
 
     override fun getItemCount(): Int {
-        return /*modelList.size*/ 4
+        return modelList.size
 
     }
 

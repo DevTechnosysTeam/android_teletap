@@ -2,11 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.SignUp">
 
     <LinearLayout
@@ -27,7 +23,8 @@
                 android:onClick="onClick"
                 android:src="@drawable/white_back_icon"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"/>
+                android:layout_marginTop="@dimen/_10sdp"
+                android:contentDescription="@string/back" />
 
             <ImageView
                 android:id="@+id/imgLogo"
@@ -36,7 +33,7 @@
                 android:src="@drawable/logo_icon"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_50sdp"
-                />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/text1"
@@ -64,6 +61,11 @@
 
         </RelativeLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,12 +75,12 @@
                 android:id="@+id/firstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/switch_colour"
                 app:boxStrokeWidth="@dimen/_1sdp"
                 app:hintTextColor="#B7BEC5"
                 android:hint="@string/first_name"
                 android:textColorHint = "#B7BEC5"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/switch_colour"
+                style="@style/TextInputLayoutStyle"
                 app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
                 app:boxCornerRadiusBottomStart="@dimen/_5sdp"
                 app:boxCornerRadiusTopEnd="@dimen/_5sdp"
@@ -87,16 +89,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_20sdp">
+                android:layout_marginTop="@dimen/_20sdp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/first_name"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:maxLength="55"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="textPersonName"
@@ -127,10 +129,9 @@
                     android:id="@+id/edLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/last_name"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:maxLength="55"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="textPersonName"
@@ -162,10 +163,9 @@
                     android:id="@+id/edEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:maxLength="55"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="textEmailAddress"
@@ -178,8 +178,10 @@
                 android:layout_height="wrap_content"
                 app:boxStrokeColor="@color/switch_colour"
                 app:boxStrokeWidth="@dimen/_1sdp"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/expand_icon"
                 app:hintTextColor="#B7BEC5"
-                android:hint="Country Code"
+                android:hint="@string/country_code"
                 android:textColorHint = "#B7BEC5"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
@@ -198,11 +200,10 @@
                     android:id="@+id/edCountryCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Country Code"
                     android:textColor="#262626"
                     android:onClick="onClick"
                     android:textColorHint="#B7BEC5"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:focusableInTouchMode="false"
                     android:maxLength="16"
                     android:fontFamily="@font/open_sans_semibold"
@@ -234,11 +235,9 @@
                     android:id="@+id/edMobileNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mobile_number"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
-                    android:textSize="16sp"
-                    android:maxLength="16"
+                    android:textSize="14sp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="phone"
                     tools:ignore="Autofill" />
@@ -268,10 +267,9 @@
                     android:id="@+id/edPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="textPassword"
                     tools:ignore="Autofill" />
@@ -301,10 +299,10 @@
                     android:id="@+id/edConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/confirm_password"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
+                    android:imeOptions="actionDone"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="textPassword"
                     tools:ignore="Autofill" />
@@ -334,8 +332,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/checkbox"
                     android:layout_centerVertical="true"
-                    android:paddingStart="@dimen/_5sdp"
-                    android:text="I Accept Terms and conditions"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:text="@string/i_accept"
                     android:fontFamily="@font/open_sans_regular"
                     android:textColor="#000000"
                     android:textSize="13sp"/>
@@ -360,9 +358,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </ScrollView>
+
     </LinearLayout>
 
 
-</ScrollView>
+
 
 </layout>

@@ -4,10 +4,10 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.Html
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import com.teletap.AppPreference
 import com.teletap.BaseActivity
 import com.teletap.R
 import com.teletap.adapter.Country_code_Adapter
@@ -38,6 +37,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+
 
 class SignUp : BaseActivity(), ISignUpView {
 
@@ -63,8 +63,18 @@ class SignUp : BaseActivity(), ISignUpView {
         presnter = SignupPresenter()
         presnter.view = this
         getFcmToken()
-        val str = "I Accept  <b><font color='#0F4C75'> Terms and conditions</font></b>"
-        binding.textCheckbox.text = Html.fromHtml(str, Html.FROM_HTML_MODE_COMPACT)
+        val str = getString(R.string.i_accept)+" "+"<b><font color='#0F4C75'> <a href='https://teletap.devtechnosys.info/terms' >Terms and conditions</a></font></b>"
+        val s:Spannable = Html.fromHtml(str, Html.FROM_HTML_MODE_COMPACT) as Spannable
+        for (u in s.getSpans(0, s.length, URLSpan::class.java)) {
+            s.setSpan(object : UnderlineSpan() {
+                override fun updateDrawState(tp: TextPaint) {
+                    tp.isUnderlineText = false
+                }
+            }, s.getSpanStart(u), s.getSpanEnd(u), 0)
+        }
+        //binding.textCheckbox.text = Html.fromHtml(s.toString(), Html.FROM_HTML_MODE_COMPACT)
+        binding.textCheckbox.text = s
+        binding.textCheckbox.movementMethod = LinkMovementMethod.getInstance();
 
         if(intent!=null){
             cameFrom = intent.getStringExtra("cameFrom").toString()
@@ -96,13 +106,13 @@ class SignUp : BaseActivity(), ISignUpView {
 
     fun onClick(view: View) {
         when(view.id){
-            R.id.imgBack ->{
-                finish()
+            R.id.imgBack -> {
+                onBackPressed()
             }
-            R.id.btnSignUp ->{
+            R.id.btnSignUp -> {
                 Utility.hideKeyboard(this)
                 if (cameFrom == "login")
-                validationCheck()
+                    validationCheck()
                 else if (cameFrom == "googleLogin")
                     validationGoogleCheck()
                 /*val intent = Intent(this@SignUp, OtpVerification::class.java)
@@ -114,6 +124,20 @@ class SignUp : BaseActivity(), ISignUpView {
             }
         }
     }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        if (cameFrom == "login"){
+            finish()
+        }else if (cameFrom == "googleLogin") {
+            val intent = Intent(this@SignUp, LoginOptions::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    /*Password Mismatch! Please enter the same password in both the fields
+    Mobile number must be 7 - 15 digits*/
 
     private fun validationGoogleCheck(){
         if (TextUtils.isEmpty(binding.edFirstName.text.toString().trim())) {
@@ -135,7 +159,7 @@ class SignUp : BaseActivity(), ISignUpView {
             Toast.makeText(this@SignUp, "Please enter mobile number", Toast.LENGTH_SHORT).show()
             binding.edMobileNo.requestFocus()
         }else if (binding.edMobileNo.text?.length!! < 7) {
-            Toast.makeText(this@SignUp, "Please enter valid mobile number", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@SignUp, "Mobile number must be 7 - 15 digits", Toast.LENGTH_SHORT).show()
             binding.edMobileNo.requestFocus()
         }else if(!binding.checkbox.isChecked){
             Toast.makeText(this@SignUp, "Please except Terms and conditions", Toast.LENGTH_SHORT).show()
@@ -146,7 +170,6 @@ class SignUp : BaseActivity(), ISignUpView {
 
     private fun callGoogleApi() {
         if (Utility.hasConnection(this@SignUp)) {
-
             val map: MutableMap<String, Any> = HashMap()
             map["email"] = "" + email
             map["country_code"] = binding.edCountryCode.text.toString().trim()
@@ -162,8 +185,6 @@ class SignUp : BaseActivity(), ISignUpView {
             Utility.showToast(this@SignUp, getString(R.string.no_network_message))
         }
     }
-
-
 
     private fun validationCheck() {
         Log.e("country", binding.edCountryCode.text.toString().trim())
@@ -187,19 +208,26 @@ class SignUp : BaseActivity(), ISignUpView {
             Toast.makeText(this@SignUp, "Please enter mobile number", Toast.LENGTH_SHORT).show()
             binding.edMobileNo.requestFocus()
         }else if (binding.edMobileNo.text?.length!! < 7) {
-            Toast.makeText(this@SignUp, "Please enter valid mobile number", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@SignUp, "Mobile number must be 7 - 15 digits", Toast.LENGTH_SHORT).show()
             binding.edMobileNo.requestFocus()
         }else if (TextUtils.isEmpty(binding.edPassword.text.toString().trim())) {
             Toast.makeText(this@SignUp, "Please enter password", Toast.LENGTH_SHORT).show()
             binding.edPassword.requestFocus()
         }else if (binding.edPassword.text?.length!! < 7) {
-            Toast.makeText(this@SignUp, "Password must contain at least 7 characters", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@SignUp,
+                "Password must contain at least 7 characters",
+                Toast.LENGTH_SHORT
+            ).show()
             binding.edPassword.requestFocus()
         }else if (TextUtils.isEmpty(binding.edConfirmPassword.text.toString().trim())) {
             Toast.makeText(this@SignUp, "Please enter confirm password", Toast.LENGTH_SHORT).show()
             binding.edConfirmPassword.requestFocus()
-        }else if(!Utility.isPasswordSame(binding.edPassword.text.toString(), binding.edConfirmPassword.text.toString())){
-            Toast.makeText(this@SignUp, "Confirm Password does not match", Toast.LENGTH_SHORT).show()
+        }else if(!Utility.isPasswordSame(
+                binding.edPassword.text.toString(),
+                binding.edConfirmPassword.text.toString()
+            )){
+            Toast.makeText(this@SignUp, "Password Mismatch! Please enter the same password in both the fields.", Toast.LENGTH_SHORT).show()
         }else if(!binding.checkbox.isChecked){
             Toast.makeText(this@SignUp, "Please except Terms and conditions", Toast.LENGTH_SHORT).show()
         }else {
@@ -252,7 +280,7 @@ class SignUp : BaseActivity(), ISignUpView {
             Toast.makeText(this@SignUp, body.message, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, OtpVerification::class.java)
             intent.putExtra("cameFrom", "googleLogin")
-            body.data?.let { intent.putExtra("user_id", it.user_id) }
+            body.data?.let { intent.putExtra("user_id", it.id) }
             intent.putExtra("isNumberVerified", false)
             startActivity(intent)
             finish()
@@ -272,7 +300,10 @@ class SignUp : BaseActivity(), ISignUpView {
         dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog1.setContentView(R.layout.dialog_country_code_picker_layout)
         recyclerView = dialog1.findViewById(R.id.ccRecycler)
-        dialog1.window!!.setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+        dialog1.window!!.setLayout(
+            ViewGroup.LayoutParams.FILL_PARENT,
+            ViewGroup.LayoutParams.FILL_PARENT
+        );
         val etSearch : EditText = dialog1.findViewById(R.id.etSearch)
         val ivClose: ImageView = dialog1.findViewById(R.id.ivClose)
         layoutManager = LinearLayoutManager(this)
@@ -298,7 +329,7 @@ class SignUp : BaseActivity(), ISignUpView {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                filter(s.toString(), codeModels.toMutableList())
+                filter(s.trim().toString(), codeModels.toMutableList())
             }
         })
 
@@ -309,8 +340,11 @@ class SignUp : BaseActivity(), ISignUpView {
         var codeModels_12: MutableList<CountryModel?> = codeModels12
         codeModels_12 = ArrayList<CountryModel?>()
         for (item in codeModels) {
-            if (item.countryName.toLowerCase(Locale.ROOT).contains(toString.toLowerCase(Locale.ROOT).toUpperCase(
-                    Locale.ROOT))
+            if (item.countryName.toLowerCase(Locale.ROOT).contains(
+                    toString.toLowerCase(Locale.ROOT).toUpperCase(
+                        Locale.ROOT
+                    )
+                )
                 || item.countryName.toUpperCase(Locale.ROOT).contains(toString.toUpperCase(Locale.ROOT))) {
                 codeModels_12.add(item)
             }
@@ -342,4 +376,5 @@ class SignUp : BaseActivity(), ISignUpView {
 
         })
     }
+
 }

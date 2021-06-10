@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Filter"
+        android:text="@string/filter"
         android:fontFamily="@font/open_sans_bold"
         android:textColor="#222222"
         android:textSize="22sp"/>
@@ -25,7 +26,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/close_blue_icon"
         app:layout_constraintTop_toTopOf="@id/text"
-        app:layout_constraintBottom_toBottomOf="@id/text"/>
+        app:layout_constraintBottom_toBottomOf="@id/text"
+        android:contentDescription="@string/close" />
 
 
     <RelativeLayout
@@ -41,9 +43,10 @@
 
         <TextView
             android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
-            android:hint="Date"
+            android:hint="@string/date"
+            android:layout_toStartOf="@+id/imgCalender"
             android:textColorHint="#979797"
             android:textColor="#1B262C"
             android:textSize="14sp"
@@ -57,7 +60,8 @@
             android:layout_height="@dimen/_15sdp"
             android:src="@drawable/icon_calender"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/date" />
 
 
     </RelativeLayout>
@@ -75,9 +79,10 @@
 
         <TextView
             android:id="@+id/tvCurrency"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
-            android:text="AED"
+            android:text="@string/aed"
+            android:layout_toStartOf="@+id/imgExpand"
             android:textColorHint="#979797"
             android:textColor="#1B262C"
             android:textSize="14sp"
@@ -85,26 +90,94 @@
             android:fontFamily="@font/open_sans_semibold"
             />
 
+
+
         <ImageView
             android:id="@+id/imgExpand"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/expand_icon"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/llCurrencyOptions"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/_8sdp"
+        android:background="@drawable/grey_border_round_corner_bg"
+        android:layout_marginTop="@dimen/_2sdp"
+        app:layout_constraintTop_toBottomOf="@+id/rltvCurrency"
+        >
 
-    <Button
-        android:id="@+id/btnApply"
+        <TextView
+            android:id="@+id/aed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/aed"
+            android:textSize="14sp"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/black"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:background="@color/background_"/>
+
+        <TextView
+            android:id="@+id/usd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/usd"
+            android:textSize="14sp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/black"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClear"
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llCurrencyOptions"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnApply"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/grey_btn_round_corner_bg"
+        android:textColor="@color/black"
+        android:text="@string/clear"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnApply"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_35sdp"
+        app:layout_constraintStart_toEndOf="@+id/btnClear"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rltvCurrency"
+        android:layout_marginStart="@dimen/_5sdp"
+        app:layout_constraintTop_toBottomOf="@id/llCurrencyOptions"
         android:background="@drawable/blue_btn_round_corner_bg"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="Apply"
+        android:text="@string/apply"
         android:textColor="@color/white"
         android:fontFamily="@font/open_sans_semibold"
         android:textSize="16sp"

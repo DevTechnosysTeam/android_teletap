@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:fontFamily="@font/open_sans_regular"
     android:textSize="14sp"
-    android:text="data"
+    android:text="@string/date"
     android:gravity="center"
     android:padding="@dimen/_5sdp"
     android:background="@drawable/bg_spinner_item"

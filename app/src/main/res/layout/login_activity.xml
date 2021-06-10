@@ -3,9 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<LinearLayout
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".activity.Login">
 
@@ -17,19 +22,30 @@
         android:layout_gravity="center">
 
         <ImageView
+            android:id="@+id/imgBackLogin"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:src="@drawable/white_back_icon"
+            android:onClick="onClickLogin"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:contentDescription="@string/back" />
+
+        <ImageView
             android:id="@+id/img"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
             android:src="@drawable/logo_icon"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_80sdp"/>
+            android:layout_marginTop="@dimen/_80sdp"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Welcome!"
+            android:text="@string/welcome"
             android:textColor="@color/white"
             android:layout_below="@id/img"
             android:layout_marginTop="@dimen/_20sdp"
@@ -42,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Sign in to continue"
+            android:text="@string/sign_in_to_continue"
             android:textColor="@color/white"
             android:layout_below="@id/text1"
             android:layout_marginTop="@dimen/_5sdp"
@@ -70,11 +86,13 @@
             app:boxStrokeColor="@color/switch_colour"
             app:boxStrokeWidth="@dimen/_1sdp"
             app:hintTextColor="#B7BEC5"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/expand_icon"
             app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
             app:boxCornerRadiusBottomStart="@dimen/_5sdp"
             app:boxCornerRadiusTopEnd="@dimen/_5sdp"
             app:boxCornerRadiusTopStart="@dimen/_5sdp"
-            android:hint="Country Code"
+            android:hint="@string/country_code"
             android:focusableInTouchMode="false"
             android:textColorHint = "#B7BEC5"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -85,10 +103,9 @@
                 android:id="@+id/edCountryCodeLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Country Code"
                 android:textColor="#262626"
                 android:textColorHint="#B7BEC5"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:onClick="onClickLogin"
                 android:focusableInTouchMode="false"
                 android:fontFamily="@font/open_sans_semibold"
@@ -103,7 +120,7 @@
             app:boxStrokeColor="@color/switch_colour"
             app:boxStrokeWidth="@dimen/_1sdp"
             app:hintTextColor="#B7BEC5"
-            android:hint="Email/Mobile number"
+            android:hint="@string/email_mobile_number"
             android:textColorHint = "#B7BEC5"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
@@ -115,10 +132,9 @@
                 android:id="@+id/edEmailMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email/Mobile number"
                 android:textColor="#262626"
                 android:textColorHint="#B7BEC5"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:inputType="textEmailAddress"
                 tools:ignore="Autofill" />
@@ -131,7 +147,7 @@
             app:boxStrokeColor="@color/switch_colour"
             app:boxStrokeWidth="@dimen/_1sdp"
             app:hintTextColor="#B7BEC5"
-            android:hint="Password"
+            android:hint="@string/password"
             android:textColorHint = "#B7BEC5"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
@@ -144,10 +160,10 @@
                 android:id="@+id/edPasswordLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
                 android:textColor="#262626"
                 android:textColorHint="#B7BEC5"
-                android:textSize="16sp"
+                android:textSize="14sp"
+                android:imeOptions="actionDone"
                 android:fontFamily="@font/open_sans_semibold"
                 android:inputType="textPassword"
                 tools:ignore="Autofill" />
@@ -158,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp">
 
-            <CheckBox
+            <!--<CheckBox
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,7 +184,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/black"
                 style="@style/CustomCheckbox02"
-                android:textSize="13sp"/>
+                android:textSize="13sp"/>-->
 
             <TextView
                 android:id="@+id/forgotPassword"
@@ -176,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="Forgot password?"
+                android:text="@string/forgot_password"
                 android:onClick="onClickLogin"
                 android:textColor="#0F4C75"
                 android:fontFamily="@font/open_sans_semibold"
@@ -192,7 +208,7 @@
             android:layout_height="@dimen/_35sdp"
             android:background="@drawable/blue_btn_round_corner_bg"
             android:layout_marginTop="@dimen/_15sdp"
-            android:text="LOGIN"
+            android:text="@string/login"
             android:onClick="onClickLogin"
             android:textColor="@color/white"
             android:fontFamily="@font/open_sans_bold"
@@ -211,7 +227,7 @@
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Not registered yet?"
+                android:text="@string/not_registered_yet"
                 android:textSize="14sp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="#B7BEC5"
@@ -223,7 +239,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/text"
-                android:text="Sign Up"
+                android:text="@string/sign_up_small"
                 android:onClick="onClickLogin"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:fontFamily="@font/open_sans_bold"
@@ -235,5 +251,7 @@
 
     </LinearLayout>
 </LinearLayout>
+
+    </ScrollView>
 
 </layout>

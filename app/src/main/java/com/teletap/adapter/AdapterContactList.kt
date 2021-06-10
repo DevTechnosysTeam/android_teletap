@@ -32,6 +32,7 @@ class AdapterContactList(private val context: Context, private val modelList: Ar
         val binding = holder.binding as ItemContactListLayoutBinding
 
         binding.tvName.text = modelList[position].name
+        binding.text.text = modelList[position].name.toString()[0].toString()
         binding.tvEmail.text = modelList[position].email
 
         binding.mainLayout.setOnClickListener { view ->

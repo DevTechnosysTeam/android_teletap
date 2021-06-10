@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -21,7 +22,6 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nice Herbal Beauty Shop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:fontFamily="@font/open_sans_semibold"
@@ -30,13 +30,12 @@
                 />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/transactionId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tvName"
                 app:layout_constraintBottom_toBottomOf="@id/tvName"
-                android:text="12/04/2021"
                 android:textColor="#3282B8"
                 android:textSize="13sp"
                 android:fontFamily="@font/open_sans_regular"/>
@@ -47,7 +46,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tvName"
                 app:layout_constraintStart_toStartOf="@id/tvName"
-                android:text="Amount : AED 200"
+                android:text="@string/amount_heading"
                 android:fontFamily="@font/open_sans_regular"
                 android:textColor="#979797"
                 android:textSize="16sp"
@@ -60,17 +59,18 @@
                 app:layout_constraintTop_toBottomOf="@id/amount"
                 app:layout_constraintStart_toStartOf="@id/amount"
                 android:src="@drawable/clock"
-                android:layout_marginTop="@dimen/_8sdp"/>
+                android:layout_marginTop="@dimen/_8sdp"
+                tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/clock"
                 app:layout_constraintTop_toTopOf="@id/clock"
                 app:layout_constraintBottom_toBottomOf="@id/clock"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:text="12:00 am"
+                android:text=""
                 android:fontFamily="@font/open_sans_regular"
                 android:textSize="14sp"
                 android:textColor="#979797"/>
@@ -79,12 +79,12 @@
                 android:id="@+id/calender"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
-                app:layout_constraintStart_toEndOf="@id/time"
-                app:layout_constraintTop_toTopOf="@id/time"
-                app:layout_constraintBottom_toBottomOf="@id/time"
+                app:layout_constraintStart_toEndOf="@id/tvTime"
+                app:layout_constraintTop_toTopOf="@id/tvTime"
+                app:layout_constraintBottom_toBottomOf="@id/tvTime"
                 android:src="@drawable/calender"
                 android:layout_marginStart="@dimen/_10sdp"
-                />
+                android:contentDescription="@string/date" />
 
             <TextView
                 android:id="@+id/tvDate"
@@ -94,7 +94,7 @@
                 app:layout_constraintTop_toTopOf="@id/calender"
                 app:layout_constraintBottom_toBottomOf="@id/calender"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:text="09/04/2021"
+                android:text="@string/date"
                 android:fontFamily="@font/open_sans_regular"
                 android:textSize="14sp"
                 android:textColor="#979797"/>

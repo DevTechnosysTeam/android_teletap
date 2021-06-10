@@ -53,6 +53,11 @@ class AdapterCity(private val context: Context, categoryListModels: ArrayList<Mo
 
     }
 
+    fun filterCityList(models : ArrayList<ModelCity.DataBean>) {
+        modelList = models
+        notifyDataSetChanged()
+    }
+
 
     interface OnItemClickListener {
         fun onSelectedCity(view: View?, index: Int, s: ModelCity.DataBean)

@@ -24,7 +24,6 @@
             android:layout_height="@dimen/_25sdp"
             android:src="@drawable/black_back_icon"
             android:layout_centerVertical="true"
-            android:onClick="onBusinessClick"
             android:layout_marginStart="@dimen/_10sdp"
             android:contentDescription="@string/back" />
 
@@ -59,8 +58,8 @@
 
             <RelativeLayout
                 android:id="@+id/rltvImageSection"
-                android:layout_width="@dimen/_90sdp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_85sdp"
                 android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="@id/imgSection"
                 app:layout_constraintStart_toStartOf="@id/imgSection"
@@ -69,12 +68,12 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/roundedImageView"
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_90sdp"
-                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_85sdp"
+                    android:layout_centerInParent="true"
                     android:src="@drawable/default_user_profile"
                     app:riv_corner_radius="@dimen/_10sdp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:elevation="@dimen/_5sdp"
                      />
 
@@ -90,7 +89,8 @@
                 app:layout_constraintTop_toTopOf="@id/rltvImageSection"
                 app:layout_constraintBottom_toBottomOf="@+id/rltvImageSection"
                 app:layout_constraintStart_toStartOf="@+id/rltvImageSection"
-                android:layout_marginStart="@dimen/_70sdp"
+                android:layout_marginStart="@dimen/_65sdp"
+                android:contentDescription="@string/addimage"
                 />
 
 
@@ -118,7 +118,6 @@
                     android:id="@+id/edFirstNameAB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/first_name"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
@@ -151,7 +150,6 @@
                     android:id="@+id/edLastNameAB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/last_name"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
@@ -184,7 +182,6 @@
                     android:id="@+id/edBusinessNameAB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/business_name"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
@@ -218,12 +215,43 @@
                     android:id="@+id/edDisplayNameAB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/display_name"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="textPersonName"
+                    tools:ignore="Autofill" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/TaxNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/switch_colour"
+                app:boxStrokeWidth="@dimen/_1sdp"
+                app:hintTextColor="#B7BEC5"
+                android:hint="@string/business_tax_number"
+                android:textColorHint = "#B7BEC5"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_5sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_5sdp"
+                app:boxCornerRadiusTopStart="@dimen/_5sdp"
+                app:layout_constraintStart_toStartOf="@+id/displayName"
+                app:layout_constraintEnd_toEndOf="@+id/displayName"
+                app:layout_constraintTop_toBottomOf="@+id/displayName"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edTaxNumberAB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#262626"
+                    android:textColorHint="#B7BEC5"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:inputType="text"
                     tools:ignore="Autofill" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -241,9 +269,9 @@
                 app:boxCornerRadiusBottomStart="@dimen/_5sdp"
                 app:boxCornerRadiusTopEnd="@dimen/_5sdp"
                 app:boxCornerRadiusTopStart="@dimen/_5sdp"
-                app:layout_constraintStart_toStartOf="@+id/displayName"
-                app:layout_constraintEnd_toEndOf="@+id/displayName"
-                app:layout_constraintTop_toBottomOf="@+id/displayName"
+                app:layout_constraintStart_toStartOf="@+id/TaxNumber"
+                app:layout_constraintEnd_toEndOf="@+id/TaxNumber"
+                app:layout_constraintTop_toBottomOf="@+id/TaxNumber"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp">
 
@@ -251,13 +279,13 @@
                     android:id="@+id/edAboutAB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/about_business"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="textMultiLine"
-                    android:minLines="1"
+                    android:minLines="2"
+                    android:gravity="start"
                     android:maxLines="6"
                     tools:ignore="Autofill" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -265,35 +293,37 @@
             <RelativeLayout
                 android:id="@+id/rltv1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/about"
                 app:layout_constraintEnd_toEndOf="@+id/about"
                 app:layout_constraintTop_toBottomOf="@+id/about"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/edittext_bg"
+                android:paddingVertical="@dimen/_8sdp"
                 >
                 <TextView
                     android:id="@+id/tvLicenseName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/shop_business_license"
+                    android:layout_toStartOf="@id/btnBrowseLicense"
                     android:fontFamily="@font/open_sans_semibold"
                     android:layout_centerVertical="true"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
-                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
                     />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnBrowseLicense"
                     android:layout_width="@dimen/_65sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:background="@drawable/blue_btn_round_bg"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="Browse"
+                    android:text="@string/browse"
                     android:textColor="@color/white"
                     android:fontFamily="@font/open_sans_regular"
                     android:textAllCaps="false"
@@ -305,28 +335,30 @@
             <RelativeLayout
                 android:id="@+id/rltv2"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/rltv1"
                 app:layout_constraintEnd_toEndOf="@+id/rltv1"
                 app:layout_constraintTop_toBottomOf="@+id/rltv1"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/edittext_bg"
+                android:paddingVertical="@dimen/_8sdp"
                 >
                 <TextView
                     android:id="@+id/tvIdProofName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="ID Proof"
+                    android:hint="@string/id_proof"
+                    android:layout_toStartOf="@id/btnBrowseId"
                     android:fontFamily="@font/open_sans_semibold"
                     android:layout_centerVertical="true"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
-                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
                     />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnBrowseId"
                     android:layout_width="@dimen/_65sdp"
                     android:layout_height="@dimen/_25sdp"
@@ -334,7 +366,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:text="@string/browse"
-                    android:onClick="onBusinessClick"
                     android:textColor="@color/white"
                     android:fontFamily="@font/open_sans_regular"
                     android:textAllCaps="false"
@@ -344,33 +375,42 @@
             </RelativeLayout>
 
 
-            <RelativeLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/category"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:onClick="onBusinessClick"
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/switch_colour"
+                app:boxStrokeWidth="@dimen/_1sdp"
+                app:hintTextColor="#B7BEC5"
+                app:endIconMode="custom"
+                android:hint="@string/category"
+                app:endIconDrawable="@drawable/expand_icon"
                 app:layout_constraintStart_toStartOf="@+id/rltv2"
                 app:layout_constraintEnd_toEndOf="@+id/rltv2"
                 app:layout_constraintTop_toBottomOf="@+id/rltv2"
-                android:background="@drawable/edittext_bg"
                 android:layout_marginHorizontal="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColorHint = "#B7BEC5"
+                android:focusableInTouchMode="false"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
+                app:boxCornerRadiusBottomStart="@dimen/_5sdp"
+                app:boxCornerRadiusTopEnd="@dimen/_5sdp"
+                app:boxCornerRadiusTopStart="@dimen/_5sdp">
 
-                <TextView
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tvCategory"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
-                    android:hint="@string/category"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:gravity="center_vertical"
+                    android:focusableInTouchMode="false"
                     android:fontFamily="@font/open_sans_semibold"
                     android:minLines="1"
                     tools:ignore="Autofill" />
 
-            </RelativeLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/website"
@@ -396,10 +436,11 @@
                     android:id="@+id/edWebsite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/website"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
+                    android:linksClickable="true"
+                    android:autoLink="web|email"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="text"
                     android:minLines="1"
@@ -430,13 +471,14 @@
                     android:id="@+id/edSocialMedia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/social_media"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"
                     android:fontFamily="@font/open_sans_semibold"
                     android:inputType="text"
                     android:minLines="1"
+                    android:linksClickable="true"
+                    android:autoLink="web|email"
                     tools:ignore="Autofill" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -449,6 +491,8 @@
                 app:hintTextColor="#B7BEC5"
                 android:hint="@string/country"
                 android:textColorHint = "#B7BEC5"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/expand_icon"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxCornerRadiusBottomEnd="@dimen/_5sdp"
                 app:boxCornerRadiusBottomStart="@dimen/_5sdp"
@@ -465,7 +509,6 @@
                     android:id="@+id/edCountryAB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/country"
                     android:textColor="#262626"
                     android:textColorHint="#B7BEC5"
                     android:textSize="16sp"

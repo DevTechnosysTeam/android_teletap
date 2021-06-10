@@ -34,7 +34,7 @@ class NfcActivity : BaseActivity() {
         binding.toolBarAC.title.text = "Payment"
         binding.toolBarAC.imgBack.setOnClickListener{onBackPressed()}
 
-        binding.tvAmount.text = "Amount to be paid AED"+amount
+        binding.tvAmount.text = "Amount to be paid AED$amount"
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this)
         pendingIntent = PendingIntent.getActivity(this, 0, Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0)

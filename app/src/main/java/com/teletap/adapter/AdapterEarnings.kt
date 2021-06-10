@@ -20,7 +20,7 @@ class AdapterEarnings(private val context: Context, private val modelList: Array
     : RecyclerView.Adapter<AdapterEarnings.MyViewHolder>() {
     //private var modelList = ArrayList<ModelChatThreads.ThreadBean>()
     //var context: Context
-//    private val onItemClickListener: OnItemClickListener
+    //   private val onItemClickListener: OnItemClickListener
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -31,18 +31,18 @@ class AdapterEarnings(private val context: Context, private val modelList: Array
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val binding = holder.binding as ItemTransitionHistoryLayoutBinding
-        binding.tvName.text = modelList[position].business_name
-        binding.tvAmount.text = "Amount : AED "+modelList[position].total_amount.toString()
-        binding.date.text = modelList[position].created
+        binding.tvName.text = modelList[position].display_name
+        binding.tvAmount.text = "Amount : "+modelList[position].currency_type + modelList[position].vendor_amount.toString()
+        binding.transactionId.text = "#"+modelList[position].transaction_id
 
-        /*binding.mainLayout.setOnClickListener { view ->
-            onItemClickListener.onChatItemClick(view, holder.adapterPosition, modelList[holder.adapterPosition])
-        }*/
+        binding.mainLayout.setOnClickListener { view ->
+            onItemClickListener.onAdapterItemClick(view, holder.bindingAdapterPosition, modelList[holder.bindingAdapterPosition])
+        }
 
     }
 
     interface OnItemClickListener {
-        fun onAdapterItemClick(view: View?, index: Int/*, modelBean : ModelChatThreads.ThreadBean*/)
+        fun onAdapterItemClick(view: View?, index: Int, modelBean : ModelEarningsHome.DataBean.EarningDataBean)
 
     }
 

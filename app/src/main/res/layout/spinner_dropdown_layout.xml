@@ -3,7 +3,7 @@
     android:id="@android:id/text1"
     android:fontFamily="@font/open_sans_regular"
     android:textSize="16sp"
-    android:text="data"
+    android:text="@string/date"
     android:padding="@dimen/_5sdp"
     android:textColor="@color/text_colour"
     android:singleLine="true"

@@ -25,12 +25,10 @@ class ForgotPassword : BaseActivity() , IForgotPassView{
     lateinit var binding : ForgotPasswordActivityBinding
     lateinit var presenterForgetPass : ForgetPassPresenter
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.forgot_password_activity)
-
+        window.setBackgroundDrawableResource(R.drawable.screen_bg)
 
         presenterForgetPass = ForgetPassPresenter()
         presenterForgetPass.view = this

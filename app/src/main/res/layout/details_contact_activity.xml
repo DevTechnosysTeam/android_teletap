@@ -27,13 +27,17 @@
                 android:layout_centerVertical="true"
                 android:onClick="onclick"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:padding="@dimen/_3sdp"/>
+                android:padding="@dimen/_3sdp"
+                android:contentDescription="@string/back" />
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/detail"
+                android:gravity="center"
+                android:layout_toEndOf="@id/imgBack"
+                android:layout_toStartOf="@+id/imgMoreOptions"
                 android:layout_centerInParent="true"
                 android:textColor="@color/white"
                 android:fontFamily="@font/open_sans_bold"
@@ -48,7 +52,8 @@
                 android:layout_alignParentEnd="true"
                 android:onClick="onclick"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:padding="@dimen/_2sdp"/>
+                android:padding="@dimen/_2sdp"
+                 />
 
         </RelativeLayout>
 
@@ -82,7 +87,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/phone_icon"
                 android:layout_gravity="center_vertical"
-                />
+                android:contentDescription="@string/mobile_number" />
 
             <TextView
                 android:id="@+id/tvMobileNumber"
@@ -101,7 +106,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/mail_icon"
                 android:layout_marginStart="@dimen/_10sdp"
-                />
+                android:contentDescription="@string/email" />
 
             <TextView
                 android:id="@+id/tvEmail"

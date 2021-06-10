@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 
 import com.teletap.activity.HomeActivity;
 import com.teletap.activity.LoginOptions;
+import com.teletap.utilities.SharedPreferenceUtility;
 
 
 public class Session {
@@ -79,6 +80,7 @@ public class Session {
     public void logoutUser(){
         editor.clear();
         editor.commit();
+        SharedPreferenceUtility.getInstance().clearSharedPreferences();
        // SessionManager.Logout(_context);
 //        editor.remove("");
 //        Intent i = new Intent(_context, LoginActivity.class);

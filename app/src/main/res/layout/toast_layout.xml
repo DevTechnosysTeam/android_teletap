@@ -10,7 +10,7 @@
         android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Message"
+        android:text="@string/no_data_found"
         android:layout_centerInParent="true"
         android:fontFamily="@font/open_sans_regular"
         android:textColor="@color/white"

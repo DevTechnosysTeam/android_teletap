@@ -24,6 +24,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.teletap.AppPreference
@@ -67,6 +68,8 @@ class MyProfileFragment : BaseFragment(), IProfileView, View.OnClickListener {
     private var imagePath = ""
     private val IMAGE_DIRECTORY_NAME = "Teletap"
 
+    lateinit var profileLocalBroadcastManager : LocalBroadcastManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -77,6 +80,7 @@ class MyProfileFragment : BaseFragment(), IProfileView, View.OnClickListener {
         // Inflate the layout for this fragment
         binding  = DataBindingUtil.inflate(inflater, R.layout.my_profile_fragment_layout, container, false)
         presenterProfile = ProfilePresenter()
+        profileLocalBroadcastManager = activity?.let { LocalBroadcastManager.getInstance(it) }!!
         presenterProfile.view = this
         binding.addImage.setOnClickListener(this)
         binding.btnSaveP.setOnClickListener(this)
@@ -89,6 +93,9 @@ class MyProfileFragment : BaseFragment(), IProfileView, View.OnClickListener {
             e.printStackTrace()
         }
         token = userInfo.token.toString()
+
+        binding.edEmailP.isEnabled = false
+        binding.edMobileNoP.isEnabled = false
 
         getUserProfileApi()
 
@@ -218,6 +225,10 @@ class MyProfileFragment : BaseFragment(), IProfileView, View.OnClickListener {
                 binding.changePassLayout.visibility = View.GONE
                 binding.checkboxP.isChecked = false
                 isChecked = false
+                val localIntent = Intent("ProfileUpdate")
+                    .putExtra("isProfileUpdated", true)
+                profileLocalBroadcastManager.sendBroadcast(localIntent)
+
             }else{
                 Utility.showToast(activity, body.message)
             }
